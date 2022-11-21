@@ -1,8 +1,4 @@
 ## Instructions
-
-- Delete this block before adding to your repository. 
-
-- Delete any instructions you see below they will be within < >
   
 - This schedule should reflect the meetings from the start of the project until the end of the semester.
 
@@ -13,7 +9,12 @@
 
 
 ### 2022-04-15 at 13:30
-<meeting template would go here>
+Attendees: 
+Meeting purpose:
+Updates:
+Notes:
+Action Items:
+Summarize: 
 <only fill in template once you had the meeting>
 <see example on the last date>
 <use date format YYYY-MM-DD at HH:MM>
