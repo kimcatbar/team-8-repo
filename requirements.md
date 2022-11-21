@@ -55,5 +55,14 @@
   1. Ut enim ad minim veniam, quis nostrum e
   2. Ut enim ad minim veniam, quis nostrum e
   3. ...
-2. Use Case Name (Should match functional requirement name)
-   ...
+  
+2. Use Case Name: User Home Page
+- **Pre-condition:** User must be logged in. Users must have followers that have created a post or sent a message to the user.
+
+- **Trigger:** The user logs into their account.
+  
+- **Primary Sequence:** 
+  
+  1. User accesses website.
+  2. User longs into their account.
+  3. After log in is successful, user home page is displayed.
