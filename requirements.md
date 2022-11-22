@@ -1,5 +1,3 @@
-## <remove all of the example text and notes in < > such as this one>
-
 ## Functional Requirements
 
 1. Login
@@ -12,48 +10,36 @@
 8. requirement
 9. requirement
 10. requirement
-11. requirement
+11. Post image with message
 12. requirement
 
 ## Non-functional Requirements
 
-1. non-functional
+1. Works on Chrome browser
 2. non-functional
 3. non-functional
 4. non-functional
 
 ## Use Cases
 
-1. Use Case Name (Should match functional requirement name)
-- **Pre-condition:** <can be a list or short description> Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+1. Use Case Name: User Home Page
+- **Pre-condition:** User must be logged in. Users must have followers that have created a post or sent a message to the user.
 
-- **Trigger:** <can be a list or short description> Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. 
-
-- **Primary Sequence:**
+- **Trigger:** The user logs into their account.
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Et sequi incidunt 
-  3. Quis aute iure reprehenderit
-  4. ... 
-  5. ...
-  6. ...
-  7. ...
-  8. ...
-  9. ...
-  10. <Try to stick to a max of 10 steps>
-
-- **Primary Postconditions:** <can be a list or short description> 
-
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise>
+- **Primary Sequence:** 
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
-
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
+  1. User accesses website.
+  2. User longs into their account.
+  3. After log in is successful, user home page is displayed.
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
-2. Use Case Name (Should match functional requirement name)
-   ...
+- **Primary Postconditions:**
+  1. Users can view the home page.
+  2. Users can interact with content on the home page.
+  3. Users will be able to view posts and comments about the user.
+  4. Users can make posts from the home page.
+  
+- **Alternate Sequence:**
+  1. User is logged in and on a page of the website.
+  2. User clicks the home button.
+  3. User is brought to the home page.
