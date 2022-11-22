@@ -12,12 +12,12 @@
 8. requirement
 9. requirement
 10. requirement
-11. requirement
+11. Post image with message
 12. requirement
 
 ## Non-functional Requirements
 
-1. non-functional
+1. Works on Chrome browser
 2. non-functional
 3. non-functional
 4. non-functional
