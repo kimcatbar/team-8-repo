@@ -1,34 +1,27 @@
-## Instructions
-
-- Delete this block before adding to your repository. 
-
-- Delete any instructions you see below they will be within < >
-  
-- This schedule should reflect the meetings from the start of the project until the end of the semester.
-
-- Write at least 1 meeting per week until the end of the semester
-
-  
 ## Meetings
 
 
-### 2022-04-15 at 13:30
-<meeting template would go here>
-<only fill in template once you had the meeting>
-<see example on the last date>
-<use date format YYYY-MM-DD at HH:MM>
+### 2022-11-21 at 19:30
+Attendees: Ngoc, Tanveer, Antony, and Kim 
 
-### 2022-04-22 at 10:30
-<meeting template would go here>
-<only fill in template once you had the meeting>
+Meeting purpose: Assign roles, work on project proposal, finalize the requirements.
 
-### 2022-04-29 at 10:30
-- Who attended the meeting
-- Team updates (15min or less)
-  <Each team member gives an update of what they did from the last meeting and what they plan to do next. If they are stuck, bring it up here to see if others can help.>
-  - <name> worked on X. Will work on Y next. 
+Updates: Antony worked on home page use case. Will work on repo formatting next.
 
-- pair-programming (optional) (25 mins)
-  <- Pair program on one part of the project. Driver will be the person responsible for that requirement.>
+Kimberly worked on viewing user profile use case. Will work on create new post use case next.
 
-- Summarize group progress
+Tanveer is currently working on search for a user use case.
+
+Ngoc worked on sending private message to follower(s) use case. Will work on follow users/ visualize connections (whichever we decide on) use case next.
+
+Summarize: 
+
+In this meeting, requirements were finalized for the most part. Use cases were assigned to members to work on. Also, pull requests on GitHub were created as well as formatting changes to the .md files in the repository.
+
+### 2022-11-17 at 10:30
+
+Meeting Purpose: Getting together with group, starting on project proposal.
+
+Updates: The start of the project.
+
+Summarize: The group got together for the first official time. The project proposal was gone over and a second meeting time was set. Work on creating the requirements began.
