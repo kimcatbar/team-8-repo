@@ -31,10 +31,9 @@
 
 - **Primary Sequence:**
   
-1. User must login 
-2. User clicks on the search button
-3. User enters the username they are looking for.
-
+1. User clicks on the search button
+2. User enters the username they are looking for.
+3. User clicks on search button
 
 - **Primary Postconditions:** 
 
@@ -42,4 +41,9 @@
 2. Users can follow the looked up users.
 3. Users will be able to view posts and comments about the user.
 4. Users can send the looked up users message.
+
+- **Alternative Sequence:** 
+1. User clicks on the search button.
+2. User search with nothing typed in the search bar.
+3. Error and prompts the user to enter a username.
 
