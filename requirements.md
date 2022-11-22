@@ -6,8 +6,9 @@
 4. Delete account
 5. User home page (user can see messages of users they follow)
 6. Send message to followers
-7. requirement
-8. requirement
+7. Create a new post 
+8. View User Profile 
+
 9. requirement
 10. requirement
 11. Post image with message
@@ -18,7 +19,7 @@
 1. Works on Chrome browser
 2. non-functional
 3. non-functional
-4. non-functional
+4. Web only/no app support
 
 ## Use Cases
 
@@ -38,7 +39,7 @@
   2. Users can interact with content on the home page.
   3. Users will be able to view posts and comments about the user.
   4. Users can make posts from the home page.
-  
+
 - **Alternate Sequence:**
   1. User is logged in and on a page of the website.
   2. User clicks the home button.
