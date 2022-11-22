@@ -1,59 +1,58 @@
-## <remove all of the example text and notes in < > such as this one>
+Funtional Requirements
 
-## Functional Requirements
-
-1. requirement
-2. requirement
-3. requirement
-4. requirement
-5. requirement
-6. requirement
+1. Login
+2. Logout
+3. Create new account
+4. Delete account
+5. User home page (user can see messages of users they follow)
+6. Send message to followers (reply to follower posts)
 7. requirement
 8. requirement
 9. requirement
-10. requirement
+10. Visualize connections/ Follow users
 11. requirement
 12. requirement
 
-## Non-functional Requirements
+Non-functional Requirements
 
 1. non-functional
-2. non-functional
+2. Back up data
 3. non-functional
 4. non-functional
 
-## Use Cases
+Use Cases
 
-1. Use Case Name (Should match functional requirement name)
-- **Pre-condition:** <can be a list or short description> Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
-
-- **Trigger:** <can be a list or short description> Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. 
-
+4. Send private message to followers
+- **Pre-condition:** <Users must loggin Users must be logged in into the homepage and have a user who is currently following them.> 
+- **Trigger:** <User must select messages section of the home page>
 - **Primary Sequence:**
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Et sequi incidunt 
-  3. Quis aute iure reprehenderit
-  4. ... 
-  5. ...
-  6. ...
-  7. ...
-  8. ...
-  9. ...
-  10. <Try to stick to a max of 10 steps>
+  1. Click on “send message”
+  2. Type the name of the follower to send message to
+  3. Type the message
+  4. Click Send
 
-- **Primary Postconditions:** <can be a list or short description> 
+- **Primary Postconditions:** <Follower receives message in their message section of their homepage and is able to read and reply>
 
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise>
+- **Alternate Sequence:**
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
+  1. Click on “send message”
+  2. Try to send message without entering a follower or message
+  3. Error message appears notifying missing fields
 
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
+2. Visualize connections
+- **Pre-condition:** <Users must loggin Users must be logged in into the homepage and have a user who is currently following them.> 
+- **Trigger:** <User must select messages section of the home page>
+- **Primary Sequence:**
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
-2. Use Case Name (Should match functional requirement name)
-   ...
+  1. .....
+  2. .....
+  3. .....
+  4.....
+
+- **Primary Postconditions:** <Follower receives message in their message section of their homepage and is able to read and reply>
+- **Alternate Sequence:**
+  
+  1. .....
+  2. .....
+  3. ....
