@@ -8,9 +8,9 @@
 ## Meetings
 
 
-### 2022-04-15 at 13:30
-Attendees: 
-Meeting purpose:
+### 2022-04-15 at 19:30
+Attendees: Ngoc, Tanveer, Antony, and Kim 
+Meeting purpose: 
 Updates:
 Notes:
 Action Items:
