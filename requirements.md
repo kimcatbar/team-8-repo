@@ -22,7 +22,7 @@ Non-functional Requirements
 
 Use Cases
 
-4. Send private message to followers
+9. Send private message to followers
 - **Pre-condition:** <Users must loggin Users must be logged in into the homepage and have a user who is currently following them.> 
 - **Trigger:** <User must select messages section of the home page>
 - **Primary Sequence:**
@@ -40,7 +40,7 @@ Use Cases
   2. Try to send message without entering a follower or message
   3. Error message appears notifying missing fields
 
-5. Visualize connections
+10. Follow user
 - **Pre-condition:** <User is logged in> 
 - **Trigger:** <The follow option is presented to the user>
 - **Primary Sequence:**
