@@ -23,13 +23,13 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin):               #save the user data in the database
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
 
 
-class RegisterForm(FlaskForm):
+class RegisterForm(FlaskForm):                      #to signup and fixs the length of username and password
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
@@ -38,7 +38,7 @@ class RegisterForm(FlaskForm):
 
     submit = SubmitField('Register')
 
-    def validate_username(self, username):
+    def validate_username(self, username):                      #if user enters already existing username to signup
         existing_user_username = User.query.filter_by(
             username=username.data).first()
         if existing_user_username:
@@ -46,7 +46,7 @@ class RegisterForm(FlaskForm):
                 'That username already exists. Please choose a different one.')
 
 
-class LoginForm(FlaskForm):
+class LoginForm(FlaskForm):                                         #to login and fixs the length of username and password
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
 
@@ -61,7 +61,7 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])           #when a user logs in it checks with the database if the user exists
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -73,13 +73,13 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard', methods=['GET', 'POST'])              
 @login_required
 def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/logout', methods=['GET', 'POST'])
+@app.route('/logout', methods=['GET', 'POST'])                 #logout form
 @login_required
 def logout():
     logout_user()
