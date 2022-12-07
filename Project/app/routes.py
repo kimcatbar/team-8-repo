@@ -71,9 +71,9 @@ HOST_NAME = "localhost"
 HOST_PORT = 80
 DBFILE = "app.db"
 app = Flask(__name__)
-# app.debug = True
+                                                            # app.debug = True
  
-# (B) HELPER FUNCTION - SEARCH USERS
+                                                                        #HELPER FUNCTION - SEARCH USERS
 def getusers(search):
   conn = sqlite3.connect(DBFILE)
   cursor = conn.cursor()
@@ -87,16 +87,16 @@ def getusers(search):
 
 @myapp_obj.route("/", methods=["GET", "POST"])
 def index():
-  # (C1) SEARCH FOR USERS
+                                                                                    #SEARCH FOR USERS
   if request.method == "POST":
     data = dict(request.form)
     users = getusers(data["search"])
   else:
     users = []
  
-  # (C2) RENDER HTML PAGE
+                                                                                    #RENDER HTML PAGE
   return render_template("S3_users.html", usr=users)
  
-# (D) START
+
 if __name__ == "__main__":
   app.run(HOST_NAME, HOST_PORT)
