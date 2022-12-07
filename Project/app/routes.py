@@ -54,10 +54,22 @@ def register():
 
     return render_template('register.html', form=form)
 
+@myapp_obj.route('/delete', methods=['GET', 'POST'])
+@login_required
+def delete():
+    current_user.remove()
+    db.session.commit()
+    flash("Account has been deleted.")
+    return redirect('/home')
+
+@myapp_obj.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    return render_template('settings.html')
 
 HOST_NAME = "localhost"
 HOST_PORT = 80
-DBFILE = "users.db"
+DBFILE = "app.db"
 app = Flask(__name__)
 # app.debug = True
  

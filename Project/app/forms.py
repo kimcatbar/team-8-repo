@@ -2,7 +2,8 @@ from app.models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired,Email,EqualTo,InputRequired,Length,ValidationError
-
+from flask import Flask, render_template, request, make_response
+import sqlite3
 class LoginForm(FlaskForm):
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
@@ -29,3 +30,4 @@ class RegistrationForm(FlaskForm):
         if existing_user_username:
             raise ValidationError(
                 'That username already exists. Please choose a different one.')
+
