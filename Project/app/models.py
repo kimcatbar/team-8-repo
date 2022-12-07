@@ -18,6 +18,9 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'<User {self.username}>'
+    
+    def remove(self):
+        db.session.delete(self)
 
 @login.user_loader
 def load_user(id):
