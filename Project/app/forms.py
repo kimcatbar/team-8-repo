@@ -29,3 +29,5 @@ class RegistrationForm(FlaskForm):
         if existing_user_username:
             raise ValidationError(
                 'That username already exists. Please choose a different one.')
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
