@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import login
@@ -25,3 +26,12 @@ class User(db.Model, UserMixin):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return "<Post {}>".format(self.body)

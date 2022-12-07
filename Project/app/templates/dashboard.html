@@ -12,6 +12,21 @@
     <h1>Hello you are logged in.</h1>
     <a href="{{url_for('logout')}}">Press here to logout</a>
     <a href="{{url_for('delete')}}">Press here to delete account</a>
+    <h2>Hi, {{ current_user.username }}!</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.post.label }}<br>
+            {{ form.post(cols=32, rows=4) }}<br>
+            {% for error in form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% for post in posts %}
+        {% include "user_post.html" %}
+    {% endfor %}
 </body>
 
 </html>

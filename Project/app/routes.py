@@ -1,7 +1,7 @@
 from app import myapp_obj, db
 from flask import render_template, redirect, url_for, flash
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, PostForm
+from app.models import User, Post
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 from flask_login import login_required
@@ -28,7 +28,20 @@ def login():
 @myapp_obj.route('/dashboard', methods=['GET', 'POST'])              
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data,author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash("Your post in live!")
+        return redirect(url_for('dashboard'))
+    posts = [
+        {
+            'author': {"username": 'john'},
+            "body": "Beautiful day ain't it!"
+        }   
+    ]
+    return render_template('dashboard.html', title="Home Page",form=form,posts=posts)
 
 
 @myapp_obj.route('/logout', methods=['GET', 'POST'])                 #logout form
@@ -57,3 +70,13 @@ def delete():
     db.session.commit()
     flash("Account has been deleted.")
     return redirect('/home')
+
+
+@myapp_obj.route('/user/<username>', methods=['GET','POST'])#profile 
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = [{'author': user, "body": 'Test post #1'},
+             {'author': user, "body": 'Test post #2'} ]
+    return render_template('user_profile.html', user=user,posts=posts)
+    
