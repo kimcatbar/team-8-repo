@@ -28,6 +28,7 @@ def login():
 @myapp_obj.route('/dashboard', methods=['GET', 'POST'])              
 @login_required
 def dashboard():
+    
     return render_template('dashboard.html')
 
 
@@ -56,4 +57,9 @@ def delete():
     current_user.remove()
     db.session.commit()
     flash("Account has been deleted.")
-    return redirect()
+    return redirect('/home')
+
+@myapp_obj.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    return render_template('settings.html')
