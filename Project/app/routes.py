@@ -56,4 +56,4 @@ def delete():
     current_user.remove()
     db.session.commit()
     flash("Account has been deleted.")
-    return redirect()
+    return redirect('/home')
