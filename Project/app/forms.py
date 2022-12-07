@@ -1,6 +1,6 @@
 from app.models import User
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired,Email,EqualTo,InputRequired,Length,ValidationError
 
 class LoginForm(FlaskForm):
@@ -29,3 +29,8 @@ class RegistrationForm(FlaskForm):
         if existing_user_username:
             raise ValidationError(
                 'That username already exists. Please choose a different one.')
+
+class PostForm(FlaskForm):
+    post = TextAreaField('Post Something', validators=[
+        DataRequired(), Length(min=1, max=280)])
+    submit = SubmitField('Submit')
