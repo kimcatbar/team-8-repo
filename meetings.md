@@ -1,5 +1,15 @@
 ## Meetings
 
+### 2022-12-3 at 12:00
+Attendees: Ngoc, Tanveer, Antony, and Kim
+
+Meeting Purpose: Update on implementation of login, logout, and registration. Also next steps for which requirements to implement and test. Setting up meeting times for the next week.
+
+Updates: Login, logout, registration is now working. User home page, create new post, send messages to followers will be next. Requirements.md file was updated to fix issues and comments the professor provided.
+
+Summarize: 
+
+In this meeting, current requirements that were implemented were checked on and made sure that it worked. Also, schedules were confirmed for future meetings in the next week. Priorities were set on which requirements to implement next. Expectations and deadlines were set for these requirements.
 
 ### 2022-11-21 at 19:30
 Attendees: Ngoc, Tanveer, Antony, and Kim 
