@@ -1,5 +1,13 @@
 ## Meetings
 
+### 2022-12-6 at 13:30
+Attendees: Ngoc, Tanveer, Antony, and Kim
+
+Meeting Purpose: Work on implementation of delete account, user home page, user profile, create post, and followers.
+
+Updates: Login, logout, home page, create new post now work. Program has been properly divided into correct files and format. Followers requirement is biggest priority. Can start on replies, posts with images.
+
+Summarize: This meeting was mostly just getting work done and figuring out technical issues. Multiple requirements were taken care of today with pair programming done throughout the day. Milestone 2 contributions were submitted today. Sidebar was added to inherited template, allowing all pages to have it. Meeting for the next day was confirmed.
 ### 2022-12-3 at 12:00
 Attendees: Ngoc, Tanveer, Antony, and Kim
 
