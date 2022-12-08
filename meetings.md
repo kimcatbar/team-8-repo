@@ -1,5 +1,14 @@
 ## Meetings
 
+### 2022-12-7 at 17:00
+Attendees: Ngoc, Antony, and Kim
+
+Meeting Purpose: Pair programming for user profile and home page. Continuation of implementation of follower requirement.
+
+Updates: Multilingual support for Spanish now works for some sections of site. Need to continue to add more translations for the rest of the website. Attaching images to posts also works now, need to format it in a presentable way.
+
+Summarize: This was a work meeting and a continuation of the meeting from the previous day. Flask-Babel and adding image to posts were main additions to the web app. Bugs were fixed with the post requirement and should now work across the site. Progress was made on followers and displaying followers for each user. 
+
 ### 2022-12-6 at 13:30
 Attendees: Ngoc, Tanveer, Antony, and Kim
 
