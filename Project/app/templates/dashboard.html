@@ -9,27 +9,27 @@
 <li class="nav-item">
     <a href="/dashboard" class="nav-link active" aria-current="page">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-      Home
+      {{ _('Home') }}
     </a>
   </li>
   <li>
     <a href="/profile" class="nav-link text-white">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-      Profile
+      {{ _('Profile') }}
     </a>
   </li>
   <li>
     <a href="/messages" class="nav-link text-white">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#chat-quote-fill"/></svg>
-      Messages
+      {{ _('Messages') }}
     </a>
   </li>
 {% endblock %}
 
 {% block content %}
-<h1>Hi, {{ current_user.username }}!</h1>
+<h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
     {% if form %}
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p>
             {{ form.post.label }}<br>
@@ -38,6 +38,15 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        <div class="form-group">
+          {{ form.image.label() }}
+          {{ form.image(class="form-control-file") }}
+          {% if form.image.errors %}
+              {% for error in form.image.errors %}
+                  <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+      </div>
         <p>{{ form.submit() }}</p>
     </form>
     {% endif %}

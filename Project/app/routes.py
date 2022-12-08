@@ -1,4 +1,5 @@
 from app import myapp_obj, db
+from flask_babel import _
 from flask import render_template, redirect, url_for, flash
 from app.forms import LoginForm, RegistrationForm, PostForm
 from app.models import User, Post
@@ -7,10 +8,13 @@ from flask_login import current_user
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
+import os
 
 @myapp_obj.route('/')
 def home():
-    return render_template('home.html')
+    if current_user.is_authenticated:
+        return render_template('dashboard.html')
+    return render_template('index.html')
 
 
 @myapp_obj.route('/login', methods=['GET', 'POST'])           #when a user logs in it checks with the database if the user exists
@@ -30,7 +34,12 @@ def login():
 def dashboard():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data,author=current_user)
+        if form.image.data:
+            picture = form.image.data
+            picture_name = picture.filename
+            pic_path = os.path.join(myapp_obj.root_path, 'static\images', picture_name)
+            picture.save(pic_path)
+        post = Post(body=form.post.data,author=current_user,image=picture_name)
         db.session.add(post)
         db.session.commit()
         flash("Your post is live!")
@@ -48,7 +57,7 @@ def dashboard():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect('/')
 
 
 @myapp_obj.route('/register', methods=['GET', 'POST'])
@@ -68,7 +77,7 @@ def register():
 def delete():
     current_user.remove()
     db.session.commit()
-    flash("Account has been deleted.")
+    flash(_("Account has been deleted."))
     return redirect('/home')
 
 @myapp_obj.route('/settings', methods=['GET', 'POST'])
@@ -93,4 +102,6 @@ def profile():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     posts = user.posts.order_by(Post.timestamp.desc())
+    if username == current_user.username:
+        return redirect('/profile')
     return render_template('profile.html', user=user,posts=posts)

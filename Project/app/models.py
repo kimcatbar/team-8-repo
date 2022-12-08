@@ -5,7 +5,6 @@ from app import login
 from flask_login import UserMixin
 
 
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String, unique=True)
@@ -70,6 +69,7 @@ class Post(db.Model):
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    image = db.Column(db.String(20), nullable=True)
 
     def __repr__(self):
         return "<Post {}>".format(self.body)

@@ -1,6 +1,7 @@
 from app.models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from flask_wtf.file import FileField, FileAllowed
 from wtforms.validators import DataRequired,Email,EqualTo,InputRequired,Length,ValidationError
 
 class LoginForm(FlaskForm):
@@ -33,4 +34,5 @@ class RegistrationForm(FlaskForm):
 class PostForm(FlaskForm):
     post = TextAreaField('Post Something', validators=[
         DataRequired(), Length(min=1, max=280)])
+    image = FileField('Add image to your post', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Submit')
