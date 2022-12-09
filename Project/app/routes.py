@@ -1,12 +1,13 @@
 from app import myapp_obj, db
 from flask import render_template, redirect, url_for, flash
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EmptyForm
+from app.models import User, Post
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
+
 
 @myapp_obj.route('/')
 def home():
@@ -28,7 +29,7 @@ def login():
 @myapp_obj.route('/dashboard', methods=['GET', 'POST'])              
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', user=user)
 
 
 @myapp_obj.route('/logout', methods=['GET', 'POST'])                 #logout form
@@ -57,3 +58,49 @@ def delete():
     db.session.commit()
     flash("Account has been deleted.")
     return redirect('/home')
+
+@myapp_obj.route('/follow/<username>', methods=['POST'])
+@login_required
+def follow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found.'.format(username))
+            return redirect(url_for('index'))
+        if user == current_user:
+            flash('You cannot follow yourself!')
+            return redirect(url_for('user', username=username))
+        current_user.follow(user)
+        db.session.commit()
+        flash('You are following {}!'.format(username))
+        return redirect(url_for('user', username=username))
+    else:
+        return redirect(url_for('index'))
+
+@myapp_obj.route('/unfollow/<username>', methods=['POST'])
+@login_required
+def unfollow(username):
+    form = EmptyForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found.'.format(username))
+            return redirect(url_for('index'))
+        if user == current_user:
+            flash('You cannot unfollow yourself!')
+            return redirect(url_for('user', username=username))
+        current_user.unfollow(user)
+        db.session.commit()
+        flash('You are not following {}.'.format(username))
+        return redirect(url_for('user', username=username))
+    else:
+        return redirect(url_for('index'))
+
+@myapp_obj.route('/user/<username>')
+@login_required
+def user(username):
+    form = EmptyForm()
+    return render_template('user.html', user=user, posts=Post, form=form)
+
+
