@@ -34,3 +34,8 @@ class PostForm(FlaskForm):
     post = TextAreaField('Post Something', validators=[
         DataRequired(), Length(min=1, max=280)])
     submit = SubmitField('Submit')
+
+class ReplyForm(FlaskForm):
+    reply = TextAreaField("Reply to post",validators=[
+        DataRequired(), Length(min=1, max=280)])
+    respond = SubmitField("Post Reply")

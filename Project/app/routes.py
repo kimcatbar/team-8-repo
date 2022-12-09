@@ -25,22 +25,20 @@ def login():
     return render_template('login.html', form=form)
 
 
-@myapp_obj.route('/dashboard', methods=['GET', 'POST'])              
+@myapp_obj.route('/dashboard', methods=['GET', 'POST'])#display text box and posts              
 @login_required
 def dashboard():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data,author=current_user)
+        print("forms" + form.post.data)
+        post = Post(body=form.post.data,user_id=current_user.id)
         db.session.add(post)
         db.session.commit()
-        flash("Your post in live!")
+        flash('Your post in live!')
         return redirect(url_for('dashboard'))
-    posts = [
-        {
-            'author': {"username": 'john'},
-            "body": "Beautiful day ain't it!"
-        }   
-    ]
+    
+    #current_user = User.query.filter_by(username=current_user.id).first()
+    posts = current_user.my_posts().all()
     return render_template('dashboard.html', title="Home Page",form=form,posts=posts)
 
 
@@ -71,12 +69,9 @@ def delete():
     flash("Account has been deleted.")
     return redirect('/home')
 
-
 @myapp_obj.route('/user/<username>', methods=['GET','POST'])#profile 
 @login_required
-def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    posts = [{'author': user, "body": 'Test post #1'},
-             {'author': user, "body": 'Test post #2'} ]
-    return render_template('user_profile.html', user=user,posts=posts)
-    
+def profile(username):
+    posts = current_user.my_posts().all()
+    return render_template('user_profile.html', posts=posts)
+  

@@ -2,20 +2,75 @@
 
 {% block mycontent %}
 
-<head> <meta charset="UTF-8">
+<head> 
+    <style>
+        .bg-purple {
+    background-color: #212529;
+    }
+    .rounded {
+    border-radius: var(--bs-border-radius)!important;
+    }
+    .text-white {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-white-rgb),var(--bs-text-opacity))!important;
+    }
+    .p-3 {
+    padding: 1rem!important;
+    }
+    .my-3 {
+    margin-top: 1rem!important;
+    margin-bottom: 1rem!important;
+    text-align:center;
+    }
+    .align-items-center {
+    align-items: center!important;
+    }
+    .shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    }
+    .d-flex {
+        display: flex!important;
+        text-align:center;
+    }
+    *, ::after, ::before {
+    box-sizing: border-box;
+    }
+    .lh-1{
+        width:100%;
+        text-align:center;
+    }
+    div {
+    display: block;
+    }
+    </style>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://getbootstrap.com/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>User Profile</title>
 </head>
-<body>
-    <h1>User: {{ user.username }}</h1>
-    <hr>
-    {% for post in posts %}
-    <p>
-    {{ post.author.username }} says: <b>{{ post.body }}</b>
-    </p>
 
-</body>
-    
-{% endfor %} 
+<body>
+    <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
+        <div class="lh-1">
+          <h1 class="h6 mb-0 text-white lh-1">User: {{ current_user.username }}</h1>
+          <small>A personal quote, maybe? or nothing at all </small>
+        </div>
+      </div>
+    <hr>
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">Recent Posts</h6>
+        {% for post in posts %}
+        <div class="text-muted pt-3 border-bottom">
+            <p class="pb-3 mb-0 small lh-sm"></p>
+            <strong class="d-block text-gray-dark">{{ current_user.username }}</strong>
+            <p>
+            {{ post.username }} &nbsp; says: <b>{{ post.body }}</b><br>{{post.timestamp}}
+            </p>
+          </p>
+        </div>
+        {% endfor %} 
+    </div>  
+
+</body>         
 {%endblock%}

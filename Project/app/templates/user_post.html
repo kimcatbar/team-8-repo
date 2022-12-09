@@ -2,10 +2,8 @@
 <table>
     <tr valign="top">
         <td>
-            <a href="{{ url_for('user', username=post.author.username) }}">
-                {{post.author.username}}
-            </a> 
-            says:<br>{{post.body}}
+            {{current_user.username}}
+            says:<br>{{post.body}}<br>{{post.timestamp}}
         </td>
     </tr>
 </table>

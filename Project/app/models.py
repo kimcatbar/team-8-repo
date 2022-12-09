@@ -22,6 +22,11 @@ class User(db.Model, UserMixin):
     
     def remove(self):
         db.session.delete(self)
+        
+    def my_posts(self):
+        own = Post.query.filter_by(user_id=self.id)
+        return own.order_by(Post.timestamp.desc())
+    
 
 @login.user_loader
 def load_user(id):
@@ -35,3 +40,5 @@ class Post(db.Model):
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
+
+    
