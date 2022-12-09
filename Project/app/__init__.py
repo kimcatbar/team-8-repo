@@ -1,7 +1,9 @@
 from flask import Flask
 import os
+from flask import Flask, request, current_app #test
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+
 
 myapp_obj = Flask(__name__)
 
@@ -23,3 +25,10 @@ from app import routes, models
 
 with myapp_obj.app_context():
     db.create_all()
+
+# @babel.localeselector
+# def get_locale():
+#     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
+
+
+from app import models

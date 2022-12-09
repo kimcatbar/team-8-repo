@@ -20,8 +20,10 @@
         <td>
             <h1>User: {{ user.username }}</h1>
             <a href="{{ url_for('follow', username=user.username) }}">Follow</a>        
-            <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>         
-            </p>
+            <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+            <a href="{{ url_for('send_message', recipient=user.username) }}">Send private message</a>
+
+           
         </td>
     </tr>
 </table>
