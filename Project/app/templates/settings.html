@@ -4,28 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings</title>
+    <title>{{ _('Settings') }}</title>
 {% endblock %}
 {% block list %}
 <li class="nav-item">
     <a href="/dashboard" class="nav-link text-white">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-      Home
+      {{ _('Home') }}
     </a>
   </li>
   <li>
     <a href="/profile" class="nav-link text-white">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-      Profile
+      {{ _('Profile') }}
     </a>
   </li>
   <li>
     <a href="/messages" class="nav-link text-white">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#chat-quote-fill"/></svg>
-      Messages
+      {{ _('Messages') }}
     </a>
   </li>
 {% endblock %}
 {% block content %}
-    <div><a href="{{ url_for('delete') }}">Click here to delete account</a></div>
+    <div><a href="{{ url_for('delete') }}">{{ _('Click here to delete account') }}</a></div>
 {% endblock %}

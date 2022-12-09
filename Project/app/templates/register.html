@@ -6,7 +6,7 @@
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <meta name="description" content="">
-          <title>Register</title>
+          <title>{{ _('Register') }}</title>
       
           <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
       
@@ -19,18 +19,16 @@
           
       <main class="form-signin w-100 m-auto">
         <form action="" method="post" novalidate>
-          <h1 class="text-center h3 mb-3 fw-normal">Register</h1>
+          <h1 class="text-center h3 mb-3 fw-normal">{{ _('Register') }}</h1>
           {{ form.hidden_tag() }}
           <div class="text-center form-group">
-              {{ form.username.label }}
             {{ form.username(class_="form-control", size=32) }}
           </div>
           <div class="text-center form-group">
-              {{ form.password.label }}
             {{ form.password(class_="form-control", size=32) }}
           </div>
           {{ form.submit(class_="form-control") }}
-          <a href='/login'>Already have an account? Log in</a>
+          <a href='/login'>{{ _('Already have an account? Log in') }}</a>
         </form>
       </main>
         </body>

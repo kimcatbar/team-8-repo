@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>{{ _('Profile') }}</title>
 {% endblock %}
 {% block list %}
 <li class="nav-item">
@@ -31,7 +31,7 @@
     <hr>
     {% for post in posts %}
     <p>
-    {{ post.author.username }} says: <b>{{ post.body }}</b>
+    {{ post.author.username }} {{ _('says:') }}' <b>{{ post.body }}</b>
     {% if post.image %}
       <img src="{{ url_for('static', filename='images/' + post.image) }}" width="100" height="100">
     {% endif %}
