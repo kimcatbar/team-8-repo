@@ -14,4 +14,16 @@
     <a href="{{url_for('delete')}}">Press here to delete account</a>
 </body>
 
+<table>
+    <tr valign="top">
+       
+        <td>
+            <h1>User: {{ user.username }}</h1>
+            <a href="{{ url_for('follow', username=user.username) }}">Follow</a>        
+            <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>         
+            </p>
+        </td>
+    </tr>
+</table>
+
 </html>

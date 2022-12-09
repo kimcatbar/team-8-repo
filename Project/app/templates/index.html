@@ -1,0 +1,11 @@
+<!-- extend dashboard layout -->
+{% extends "dashboard.html" %}
+
+{% block content %}
+    <h1>Hi, {{ user.nickname }}!</h1>
+    {% for post in posts %}
+    <p>
+      {{ post.author.nickname }} says: <b>{{ post.body }}</b>
+    </p>
+    {% endfor %}
+{% endblock %}
