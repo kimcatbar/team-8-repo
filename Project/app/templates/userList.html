@@ -3,7 +3,7 @@
 <div class="jumbotron">
   <h2 style="text-align: center;">User list</h2>
   {% for user in users%}
-		<a href="{{url_for('userProfile', username=user.username)}}">{{user.username}}</a>
+		<a href="{{url_for('userProfile', username=user.username.data)}}">{{user.username.data}}</a>
   {% endfor %}
 </div>
 {% endblock %}

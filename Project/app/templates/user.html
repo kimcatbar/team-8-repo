@@ -3,7 +3,7 @@
 {% block app_content %}
     <table class="table table-hover">
         <tr valign="top">
-            <td><img src="{{ user.username(128) }}"></td>
+            <td><img src="{{ user.username.data(128) }}"></td>
             <td>
                 <h1>{{ _('User') }}: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
@@ -12,14 +12,14 @@
                 {% endif %}
                 <p>{{ _('%(count)d followers', count=user.followers.count()) }}, {{ _('%(count)d following', count=user.followed.count()) }}</p>
                 <p>
-                    <form action="{{ url_for('follow', username=user.username) }}" method="POST">
+                    <form action="{{ url_for('follow', username=user.username.data) }}" method="POST">
                         {{ form.hidden_tag() }}
                         {{ form.submit(value=_('Follow'), class_='btn btn-default') }}
                     </form>
                 </p>
                 {% else %}
                 <p>
-                    <form action="{{ url_for('unfollow', username=user.username) }}" method="POST">
+                    <form action="{{ url_for('unfollow', username=user.username.data) }}" method="POST">
                         {{ form.hidden_tag() }}
                         {{ form.submit(value=_('Unfollow'), class_='btn btn-default') }}
                     </form>

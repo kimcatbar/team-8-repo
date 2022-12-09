@@ -26,7 +26,8 @@ def login():
         if current_user:
             if check_password_hash(current_user.password, form.password.data):
                 login_user(current_user, remember=form.remember_me.data)
-                return redirect(url_for('dashboard'))
+                return render_template('dashboard.html', user=current_user)
+
     return render_template('login.html', form=form)
 
 
@@ -68,17 +69,17 @@ def delete():
 def follow(username): #define the follow function to let the user can follow another user
     form = EmptyForm()
     if form.validate_on_submit(): #this get error when user enter incorrect another user's account
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username.data).first()
         if user is None:
-            flash('User {} not found.'.format(username))
+            flash('User {} not found.'.format(username.data))
             return redirect(url_for('index'))
         if user == current_user: #this will stop user to follow themself
             flash('Try again. You cannot follow yourself!')
-            return redirect(url_for('user', username=username))
+            return redirect(url_for('user', username=username.data))
         current_user.follow(user)
         db.session.commit()
-        flash('You are following {}!'.format(username))
-        return redirect(url_for('user', username=username))
+        flash('You are following {}!'.format(username.data))
+        return redirect(url_for('user', username=username.data))
     else:
         return redirect(url_for('index'))
 #this helps user can unfollow their followed
@@ -87,28 +88,28 @@ def follow(username): #define the follow function to let the user can follow ano
 def unfollow(username):
     form = EmptyForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username.data).first()
         if user is None:
-            flash('User {} not found.'.format(username))
+            flash('User {} not found.'.format(username.data))
             return redirect(url_for('index'))
         if user == current_user:
             flash('You cannot unfollow yourself!')
-            return redirect(url_for('user', username=username))
+            return redirect(url_for('user', username=username.data))
         current_user.unfollow(user)
         db.session.commit()
-        flash('You are not following {}.'.format(username))
-        return redirect(url_for('user', username=username))
+        flash('You are not following {}.'.format(username.data))
+        return redirect(url_for('user', username=username.data))
     else:
         return redirect(url_for('index'))
 
 @myapp_obj.route('/user/<username>/following') #this is to show who are following the user's acc
-def showFollowing(username):
-	user = getUser(username)
+def showFollowing():
+	user = getUser()
 	return render_template('userList.html', users = user.following())
 
 @myapp_obj.route('/user/<username>/followers') #this is to show who user is currently following
-def showFollowers(username):
-	user = getUser(username)
+def showFollowers():
+	user = getUser()
 	return render_template('userList.html', users = user.followers())
 
 def getUser(username):
@@ -140,13 +141,14 @@ def send_message(recipient):
     user = User.query.filter_by(username=recipient).first_or_404()
     form = MessageForm()
     if form.validate_on_submit():
-        msg = Message(author=current_user, recipient=user,
+        msg = Message(user=current_user, recipient=user,
                       body=form.message.data)
+    
         db.session.add(msg)
         db.session.commit()
         flash(('Your message has been sent.'))
         return redirect(url_for('main.user', username=recipient))
-    return render_template('private_message.html', title=('Send Message'),
+    return render_template('send_message.html', title=('Send Message'),
                            form=form, recipient=recipient)
 #the user can view the private message
 @myapp_obj.route('/messages')
