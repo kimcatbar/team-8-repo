@@ -1,8 +1,9 @@
-from app import db
+from app import myapp_obj, db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from app import login
 from flask_login import UserMixin
+
 #to create the followers table based on the follower's ID and user's ID
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -55,16 +56,29 @@ class User(db.Model, UserMixin):
         if self.is_following(user): 
             self.followed.remove(user) #this function remove() is called for the unfollow function
             return self 
-    #the user contains two elements: followed and followers. Therefore they can check if they follow each other or not
-    def is_following(self, user): #this is to check if a link of two users currently follow each other or not
+    #this is to check who are followed by users
+    
+    def showfollowing(self, user): 
         return self.followed.filter(
             self.followers.c.followed_id == user.id).count() > 0 #count function is to return number of results
+
 
     def followed_posts(self):
         return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+    
+   
+    #this is to show that message is sent by the user
+    messages_sent = db.relationship('Message',
+                                    foreign_keys='Message.sender_id',
+                                    backref='user', lazy='dynamic')
+    #this is to show the message is received by followed
+    messages_received = db.relationship('Message',
+                                        foreign_keys='Message.recipient_id',
+                                        backref='recipient', lazy='dynamic')
+
 
 @login.user_loader
 def load_user(id):
@@ -72,24 +86,19 @@ def load_user(id):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
+    body = db.Column(db.String(280))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+#this is to extend for the user can send private message to the followed 
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id')) #this is for the sender 
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id')) #this is for the receiver
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow) #this shows the time when user read the message
 
-# class Message(db.Model):
-#     __tablename__ = 'messages'
-#     id = db.Column(db.Integer(), primary_key=True)
-#     url = db.Column(db.String())
-#     sender_id = db.Column(db.String())
-#     recipient_id = db.Column(db.String())
-#     subject = db.Column(db.String())
-#     body = db.Column(db.String())
-#     timestamp = db.Column(db.DateTime)
-#     read = db.Column(db.Boolean(), default=False)
-#     thread_id = db.Column(db.String())
-#     sender_del = db.Column(db.Boolean())
-#     recipient_del = db.Column(db.Boolean())
-    
+    def __repr__(self):
+        return '<Message {}>'.format(self.body)
