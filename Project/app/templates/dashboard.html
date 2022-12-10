@@ -18,11 +18,30 @@
     <tr valign="top">
        
         <td>
-            <h1>User: {{ user.username }}</h1>
-            <a href="{{ url_for('follow', username=user.username) }}">Follow</a>        
-            <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
-            <a href="{{ url_for('send_message', recipient=user.username) }}">Send private message</a>
-
+           
+            <div class="jumbotron">
+            {% if user.username != session.username %}
+            <form method="post" action="{{url_for('unfollow', username = user.username)}}">
+                <p class="bold">{{user.username}} <button class="btn btn-danger">Unfollow</button></p>
+            </form>
+            
+            <form method="post" action="{{url_for('follow', username = user.username)}}">
+                <p class="bold">{{user.username}} <button class="btn btn-primary">Follow</button></p>
+            </form>
+            {% endif %}
+        <hr>
+            <a href="{{url_for('showFollowers', username = user.username)}}" class="btn btn-primary">
+            Follower <span class="badge badge-light">{{user.following | length}} </span>
+            </a>
+            <a href="{{url_for('showFollowing', username = user.username)}}" class="btn btn-success">
+            Following <span class="badge badge-light">{{user.following | length}} </span>
+            </a>
+            {% for message in messages%}
+            <h4>{{message.content}}</h4>
+            <span style="font-size: 10px; font-style: italic;">{{message.published_at}}</span>
+            {% endfor %}
+            </div>
+           
            
         </td>
     </tr>

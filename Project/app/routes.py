@@ -69,17 +69,17 @@ def delete():
 def follow(username): #define the follow function to let the user can follow another user
     form = EmptyForm()
     if form.validate_on_submit(): #this get error when user enter incorrect another user's account
-        user = User.query.filter_by(username=username.data).first()
+        user = User.query.filter_by(username=username).first()
         if user is None:
-            flash('User {} not found.'.format(username.data))
+            flash('User {} not found.'.format(username))
             return redirect(url_for('index'))
         if user == current_user: #this will stop user to follow themself
             flash('Try again. You cannot follow yourself!')
-            return redirect(url_for('user', username=username.data))
+            return redirect(url_for('user', username=username))
         current_user.follow(user)
         db.session.commit()
-        flash('You are following {}!'.format(username.data))
-        return redirect(url_for('user', username=username.data))
+        flash('You are following {}!'.format(username))
+        return redirect(url_for('user', username=username))
     else:
         return redirect(url_for('index'))
 #this helps user can unfollow their followed
