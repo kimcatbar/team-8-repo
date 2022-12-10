@@ -1,6 +1,6 @@
 
 
-{% block mycontent %}
+
 
 <head> 
     <style>
@@ -47,18 +47,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://getbootstrap.com/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <title>User Profile</title>
+    <title>{{ current_user.username }} Profile</title>
 </head>
 
 <body>
     <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
         <div class="lh-1">
-          <h1 class="h6 mb-0 text-white lh-1">User: {{ current_user.username }}</h1>
-          <small>A personal quote, maybe? or nothing at all </small>
+          <h1 class="h6 mb-0 text-white lh-1"> {{ current_user.username }}'s Profile</h1>
         </div>
       </div>
     <hr>
     <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.post.label }}<br>
+                {{ form.post(cols=32, rows=4) }}<br>
+                {% for error in form.post.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
         <h6 class="border-bottom pb-2 mb-0">Recent Posts</h6>
         {% for post in posts %}
         <div class="text-muted pt-3 border-bottom">
@@ -73,4 +83,4 @@
     </div>  
 
 </body>         
-{%endblock%}
+

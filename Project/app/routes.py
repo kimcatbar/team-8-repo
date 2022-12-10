@@ -37,7 +37,6 @@ def dashboard():
         flash('Your post in live!')
         return redirect(url_for('dashboard'))
     
-    #current_user = User.query.filter_by(username=current_user.id).first()
     posts = current_user.my_posts().all()
     return render_template('dashboard.html', title="Home Page",form=form,posts=posts)
 
@@ -72,6 +71,14 @@ def delete():
 @myapp_obj.route('/user/<username>', methods=['GET','POST'])#profile 
 @login_required
 def profile(username):
+    form = PostForm()
+    if form.validate_on_submit():
+        print("forms" + form.post.data)
+        post = Post(body=form.post.data,user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post in live!')
+        return redirect(url_for('profile',username=username))
     posts = current_user.my_posts().all()
-    return render_template('user_profile.html', posts=posts)
+    return render_template('user_profile.html', form = form, posts=posts)
   
