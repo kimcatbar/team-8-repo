@@ -12,7 +12,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 myapp_obj.config.update(
     SECRET_KEY='this-is-a-secret',
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db'),
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False,
+    POSTS_PER_PAGE = 3
 )
 
 db = SQLAlchemy(myapp_obj)

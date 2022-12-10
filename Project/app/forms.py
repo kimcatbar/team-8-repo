@@ -1,7 +1,7 @@
 from app.models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired,Email,EqualTo,InputRequired,Length,ValidationError
+from wtforms.validators import DataRequired,InputRequired,Length,ValidationError
 
 
 
@@ -31,12 +31,13 @@ class RegistrationForm(FlaskForm):
         if existing_user_username:
             raise ValidationError(
                 'That username already exists. Please choose a different one.')
-#this is to create form for the follow user and followed 
-class EmptyForm(FlaskForm):
-    submit = SubmitField('Submit')
+
 #this is for the sending a private message 
 class MessageForm(FlaskForm):
     message = TextAreaField(('Message'), validators=[
         DataRequired(), Length(min=1, max=500)])
     submit = SubmitField(('Submit'))
+#this is to create submit button for the user to send the message 
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')   
 

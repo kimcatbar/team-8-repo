@@ -4,6 +4,7 @@ from datetime import datetime
 from app import login
 from flask_login import UserMixin
 
+
 #to create the followers table based on the follower's ID and user's ID
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -73,7 +74,7 @@ class User(db.Model, UserMixin):
     #this is to show that message is sent by the user
     messages_sent = db.relationship('Message',
                                     foreign_keys='Message.sender_id',
-                                    backref='user', lazy='dynamic')
+                                    backref='author', lazy='dynamic')
     #this is to show the message is received by followed
     messages_received = db.relationship('Message',
                                         foreign_keys='Message.recipient_id',
@@ -102,3 +103,5 @@ class Message(db.Model):
 
     def __repr__(self):
         return '<Message {}>'.format(self.body)
+
+

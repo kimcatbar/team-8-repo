@@ -13,7 +13,8 @@ from werkzeug.urls import url_parse
 from app.forms import MessageForm
 from app.models import Message
 
-@myapp_obj.route('/')
+@myapp_obj.route('/home',methods=['GET', 'POST'] )
+@myapp_obj.route('/',methods=['GET', 'POST'] )
 def home():
     return render_template('home.html')
 
@@ -105,12 +106,12 @@ def unfollow(username):
 @myapp_obj.route('/user/<username>/following') #this is to show who are following the user's acc
 def showFollowing():
 	user = getUser()
-	return render_template('userList.html', users = user.following())
+	return render_template('userList.html', users = user.following()) #link to the userList.html
 
 @myapp_obj.route('/user/<username>/followers') #this is to show who user is currently following
 def showFollowers():
 	user = getUser()
-	return render_template('userList.html', users = user.followers())
+	return render_template('userList.html', users = user.followers()) ##link to the userList.html
 
 def getUser(username):
 	try:
@@ -124,7 +125,7 @@ def user(username):
     form = EmptyForm()
     return render_template('user.html', user=user, posts=Post, form=form)
 
-@myapp_obj.route('/', methods=['GET', 'POST']) #user can find the post of followers 
+@myapp_obj.route('/', methods=['GET', 'POST']) 
 @myapp_obj.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -141,13 +142,12 @@ def send_message(recipient):
     user = User.query.filter_by(username=recipient).first_or_404()
     form = MessageForm()
     if form.validate_on_submit():
-        msg = Message(user=current_user, recipient=user,
+        mes = send_message(user=current_user, recipient=user,
                       body=form.message.data)
-    
-        db.session.add(msg)
+        db.session.add(mes)
         db.session.commit()
-        flash(('Your message has been sent.'))
-        return redirect(url_for('main.user', username=recipient))
+        flash(('Your message has been sent.'))          
+        return redirect(url_for('user', username=recipient))
     return render_template('send_message.html', title=('Send Message'),
                            form=form, recipient=recipient)
 #the user can view the private message

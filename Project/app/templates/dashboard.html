@@ -18,31 +18,36 @@
     <tr valign="top">
        
         <td>
-           
+            <h1>User: {{ current_user.username }}</h1>
             <div class="jumbotron">
-            {% if user.username != session.username %}
-            <form method="post" action="{{url_for('unfollow', username = user.username)}}">
-                <p class="bold">{{user.username}} <button class="btn btn-danger">Unfollow</button></p>
+            {% if current_user.username != session.username %}
+            <form method="post" action="{{url_for('follow', username=current_user.username)}}">
+                <p class="bold"><button class="btn btn-primary">Follow</button></p>
             </form>
-            
-            <form method="post" action="{{url_for('follow', username = user.username)}}">
-                <p class="bold">{{user.username}} <button class="btn btn-primary">Follow</button></p>
+            <form method="post" action="{{url_for('unfollow', username=current_user.username)}}">
+                <p class="bold"><button class="btn btn-danger">Unfollow</button></p>
+            </form>                         
+            <form method="get" action="{{url_for('send_message', recipient = current_user.username)}}">
+                <p class="bold"><button class="btn btn-primary">Send Message</button></p> 
+           
+            <form action= "Send Message" method="post">
+                <p>Send Message:</p>
+                <p><input type = "text" message = "mes"/></p>
+                <p><input type = "submit" value="submit" /></p>
             </form>
-            {% endif %}
+            {% endif %}     
         <hr>
-            <a href="{{url_for('showFollowers', username = user.username)}}" class="btn btn-primary">
-            Follower <span class="badge badge-light">{{user.following | length}} </span>
+            <a href="{{url_for('showFollowers', username=current_user.username)}}" class="btn btn-primary">
+            Follower <span class="badge badge-light">{{current_user.following | length}} </span>
             </a>
-            <a href="{{url_for('showFollowing', username = user.username)}}" class="btn btn-success">
-            Following <span class="badge badge-light">{{user.following | length}} </span>
+            <a href="{{url_for('showFollowing', username=current_user.username)}}" class="btn btn-success">
+            Following <span class="badge badge-light">{{current_user.following | length}} </span>
             </a>
             {% for message in messages%}
             <h4>{{message.content}}</h4>
             <span style="font-size: 10px; font-style: italic;">{{message.published_at}}</span>
             {% endfor %}
-            </div>
-           
-           
+            
         </td>
     </tr>
 </table>
