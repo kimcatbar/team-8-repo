@@ -25,19 +25,18 @@ def login():
     return render_template('login.html', form=form)
 
 
-@myapp_obj.route('/dashboard', methods=['GET', 'POST'])#display text box and posts              
+@myapp_obj.route('/dashboard', methods=['GET', 'POST'])#display text box and posts in dashboard           
 @login_required
 def dashboard():
-    form = PostForm()
-    if form.validate_on_submit():
+    form = PostForm()#uses form format from models 
+    if form.validate_on_submit():#if all requriements for post are met
         print("forms" + form.post.data)
-        post = Post(body=form.post.data,user_id=current_user.id)
-        db.session.add(post)
-        db.session.commit()
+        post = Post(body=form.post.data,user_id=current_user.id)#text post is created
+        db.session.add(post)#post staged
+        db.session.commit()#post is added to databse 
         flash('Your post in live!')
-        return redirect(url_for('dashboard'))
-    
-    posts = current_user.my_posts().all()
+        return redirect(url_for('dashboard'))#redirected and displayed to dashboard 
+    posts = current_user.my_posts().all()#display user's posts
     return render_template('dashboard.html', title="Home Page",form=form,posts=posts)
 
 
@@ -68,17 +67,17 @@ def delete():
     flash("Account has been deleted.")
     return redirect('/home')
 
-@myapp_obj.route('/user/<username>', methods=['GET','POST'])#profile 
+@myapp_obj.route('/user/<username>', methods=['GET','POST'])#user profile page
 @login_required
 def profile(username):
-    form = PostForm()
+    form = PostForm()#form used to user can sumbit a post
     if form.validate_on_submit():
         print("forms" + form.post.data)
         post = Post(body=form.post.data,user_id=current_user.id)
         db.session.add(post)
         db.session.commit()
         flash('Your post in live!')
-        return redirect(url_for('profile',username=username))
-    posts = current_user.my_posts().all()
+        return redirect(url_for('profile',username=username))#post and redirect to user profile
+    posts = current_user.my_posts().all()#display all user posts in profile
     return render_template('user_profile.html', form = form, posts=posts)
   

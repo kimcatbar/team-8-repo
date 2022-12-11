@@ -30,12 +30,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError(
                 'That username already exists. Please choose a different one.')
 
-class PostForm(FlaskForm):
+class PostForm(FlaskForm): #form for posting text 
     post = TextAreaField('Post Something', validators=[
         DataRequired(), Length(min=1, max=280)])
     submit = SubmitField('Submit')
-
-class ReplyForm(FlaskForm):
-    reply = TextAreaField("Reply to post",validators=[
-        DataRequired(), Length(min=1, max=280)])
-    respond = SubmitField("Post Reply")
