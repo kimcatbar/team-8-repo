@@ -1,7 +1,10 @@
 from app.models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired,InputRequired,Length,ValidationError
+from flask_wtf.file import FileField, FileAllowed
+from wtforms.validators import DataRequired,Email,EqualTo,InputRequired,Length,ValidationError
+from flask_babel import lazy_gettext #ANTONY CODE
+
 
 
 
@@ -40,4 +43,11 @@ class MessageForm(FlaskForm):
 #this is to create submit button for the user to send the message 
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')   
+
+#ANTONY CODE
+# class PostForm(FlaskForm):
+#     post = TextAreaField(lazy_gettext('Post Something'), validators=[
+#         DataRequired(), Length(min=1, max=280)])
+    # image = FileField(lazy_gettext('Add image to your post'), validators=[FileAllowed(['jpg', 'png'])])
+    # submit = SubmitField(lazy_gettext('Submit'))
 

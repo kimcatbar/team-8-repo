@@ -3,6 +3,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from app import login
 from flask_login import UserMixin
+import os
+from datetime import datetime
+from sqlalchemy.sql import func
+from . import db
+
 
 
 #to create the followers table based on the follower's ID and user's ID
@@ -16,7 +21,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String(200))
     email = db.Column(db.String(32), unique=True)
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    posts = db.relationship('Post', backref='user', lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', passive_deletes=True)
     followed = db.relationship('User',  #this is to link user to another user's account. This is a parent class
         secondary=followers,
         primaryjoin=(followers.c.follower_id == id),   #this is to link to the table with the condition is the follower's ID
@@ -85,18 +91,10 @@ class User(db.Model, UserMixin):
 def load_user(id):
     return User.query.get(int(id))
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(280))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)
 #this is to extend for the user can send private message to the followed 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sender_id = db.Column(db.Integer, db.ForeignKey('user.id')) #this is for the sender 
+    sender_id = db.Column(db.Integer, db.ForeignKey('current_user.id')) #this is for the sender 
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id')) #this is for the receiver
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow) #this shows the time when user read the message
@@ -104,4 +102,21 @@ class Message(db.Model):
     def __repr__(self):
         return '<Message {}>'.format(self.body)
 
+#ANTONYCODE
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete="CASCADE"), nullable=False)
+    comments = db.relationship('Comment', backref='post', passive_deletes=True)
 
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey(
+        'post.id', ondelete="CASCADE"), nullable=False)

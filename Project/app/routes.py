@@ -1,7 +1,7 @@
 from app import myapp_obj, db
 from flask import render_template, redirect, url_for, flash, request, abort
 from app.forms import LoginForm, RegistrationForm, EmptyForm
-from app.models import User, Post
+from app.models import User, Post, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 from flask_login import login_required
@@ -12,11 +12,14 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app.forms import MessageForm
 from app.models import Message
+from flask_babel import _ #ANTONY CODE
+
 
 @myapp_obj.route('/home',methods=['GET', 'POST'] )
 @myapp_obj.route('/',methods=['GET', 'POST'] )
 def home():
-    return render_template('home.html')
+    posts = Post.query.all()
+    return render_template("home.html", user=current_user, posts=posts)
 
 
 @myapp_obj.route('/login', methods=['GET', 'POST'])           #when a user logs in it checks with the database if the user exists
@@ -64,6 +67,7 @@ def delete():
     db.session.commit()
     flash("Account has been deleted.")
     return redirect('/home')
+
 #this is to create the follow user
 @myapp_obj.route('/follow/<username>', methods=['POST'])
 @login_required
@@ -83,6 +87,7 @@ def follow(username): #define the follow function to let the user can follow ano
         return redirect(url_for('user', username=username))
     else:
         return redirect(url_for('index'))
+
 #this helps user can unfollow their followed
 @myapp_obj.route('/unfollow/<username>', methods=['POST'])
 @login_required
@@ -135,6 +140,7 @@ def index():
         page=page, per_page=myapp_obj.config['POSTS_PER_PAGE'], error_out=False)
     return render_template('index.html', title='Home', form=form,
                            posts=posts.items)
+
 #the user can send the private message
 @myapp_obj.route('/send_message/<recipient>', methods=['GET', 'POST'])
 @login_required
@@ -150,25 +156,51 @@ def send_message(recipient):
         return redirect(url_for('user', username=recipient))
     return render_template('send_message.html', title=('Send Message'),
                            form=form, recipient=recipient)
-#the user can view the private message
-@myapp_obj.route('/messages')
+
+@myapp_obj.route("/create-post", methods=['GET', 'POST'])
 @login_required
-def messages():
-    current_user.last_message_read_time = datetime.utcnow()
-    db.session.commit()
-    page = request.args.get('page', 1, type=int)
-    messages = current_user.messages_received.order_by(
-        Message.timestamp.desc()).paginate(
-            page=page, per_page=current_user.app.config['POSTS_PER_PAGE'],
-            error_out=False)
-    next_url = url_for('main.messages', page=messages.next_num) \
-        if messages.has_next else None
-    prev_url = url_for('main.messages', page=messages.prev_num) \
-        if messages.has_prev else None
-    return render_template('view_messages.html', messages=messages.items,
-                           next_url=next_url, prev_url=prev_url)
+def create_post():
+    if request.method == "POST":
+        text = request.form.get('text')
 
+        if not text:
+            flash('Post cannot be empty', category='error')
+        else:
+            post = Post(text=text, author=current_user.id)
+            db.session.add(post)
+            db.session.commit()
+            flash('Post created!', category='success')
+            return redirect(url_for('views.home'))
 
+    return render_template('create_post.html', user=current_user)
 
+@myapp_obj.route("/posts/<username>")
+@login_required
+def posts(username):
+    user = User.query.filter_by(username=username).first()
 
+    if not user:
+        flash('No user with that username exists.', category='error')
+        return redirect(url_for('views.home'))
 
+    posts = user.posts
+    return render_template("posts.html", user=current_user, posts=posts, username=username)
+
+@myapp_obj.route("/create-comment/<post_id>", methods=['POST'])
+@login_required
+def create_comment(post_id):
+    text = request.form.get('text')
+
+    if not text:
+        flash('Comment cannot be empty.', category='error')
+    else:
+        post = Post.query.filter_by(id=post_id)
+        if post:
+            comment = Comment(
+                text=text, user=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+        else:
+            flash('Post does not exist.', category='error')
+
+    return redirect(url_for('dashboard.html'))
