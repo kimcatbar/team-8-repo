@@ -27,6 +27,8 @@ class User(db.Model, UserMixin):
         own = Post.query.filter_by(user_id=self.id)
         return own.order_by(Post.timestamp.desc())
     
+    def blog_posts(self):
+        return Post.query.order_by(Post.timestamp.desc())
 
 @login.user_loader
 def load_user(id):
@@ -37,7 +39,19 @@ class Post(db.Model):#class Post creates a user text post
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comments = db.relationship('Comment', backref='title', lazy='dynamic')
+
+    def get_comments(self):
+        return Comment.query.filter_by(post_id=self.id).order_by(Comment.timestamp.desc())
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+    def __repr__(self):
+        return '<Post %r>' % (self.body)
