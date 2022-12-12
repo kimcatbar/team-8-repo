@@ -2,10 +2,10 @@ from app.models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired,Email,EqualTo,InputRequired,Length,ValidationError
+from wtforms.validators import DataRequired,InputRequired,Length,ValidationError
 from flask_babel import lazy_gettext
 
-class LoginForm(FlaskForm):
+class LoginForm(FlaskForm):                                                 # log in form with username, password, remember me, and submit fields
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": lazy_gettext("Username") })
 
@@ -16,7 +16,7 @@ class LoginForm(FlaskForm):
 
     submit = SubmitField(lazy_gettext('Login'))
 
-class RegistrationForm(FlaskForm):
+class RegistrationForm(FlaskForm):                                         # registration form with username, password, and submit fields
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": lazy_gettext("Username") })
 
@@ -32,7 +32,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError(
                 'That username already exists. Please choose a different one.')
 
-class PostForm(FlaskForm):
+class PostForm(FlaskForm):                                              # post form with post body, image, and submit fields
     post = TextAreaField(lazy_gettext('Post Something'), validators=[
         DataRequired(), Length(min=1, max=280)])
     image = FileField(lazy_gettext('Add image to your post'), validators=[FileAllowed(['jpg', 'png'])])
