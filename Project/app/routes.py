@@ -106,3 +106,4 @@ def user(username):
     if username == current_user.username:                                              # if the selected user profile is the current logged in user, redirect to own profile
         return redirect('/profile')
     return render_template('profile.html', user=user,posts=posts)
+

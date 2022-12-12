@@ -3,7 +3,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from app import login
 from flask_login import UserMixin
-
+#to create the followers table based on the follower's ID and user's ID
+followers = db.Table('followers',
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
+)
 
 class User(db.Model, UserMixin):                                                # User class model
     id = db.Column(db.Integer, primary_key = True)                              # User ID
@@ -12,16 +16,37 @@ class User(db.Model, UserMixin):                                                
     posts = db.relationship('Post', backref='author', lazy='dynamic')           # establishing relationship between user and their posts
 
     def set_password(self, password):                                           # set password function
+
         self.password = generate_password_hash(password)
 
     def check_password(self, password):                                         # check password function
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return '<User {}>'.format(self.username)
     
     def remove(self):                                                           # remove/delete account function
         db.session.delete(self)
+    #this function is to let user can follow another user
+    def follow(self, user):
+        if not self.is_following(user): 
+            self.followed.append(user) #this funtion append() is called for the follow function
+            return self
+     #this function is to let user unfollow the followers
+    def unfollow(self, user):
+        if self.is_following(user): 
+            self.followed.remove(user) #this function remove() is called for the unfollow function
+            return self 
+    #the user contains two elements: followed and followers. Therefore they can check if they follow each other or not
+    def is_following(self, user): #this is to check if a link of two users currently follow each other or not
+        return self.followed.filter(
+            self.followers.c.followed_id == user.id).count() > 0 #count function is to return number of results
+
+    def followed_posts(self):
+        return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
+
+    def __repr__(self):
+        return '<User %r>' % (self.username)
 
 @login.user_loader
 def load_user(id):                                                             # return current user id
