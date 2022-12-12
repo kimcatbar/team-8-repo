@@ -1,7 +1,7 @@
 from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from sqlalchemy.sql import func
 from app import login
 from flask_login import UserMixin
 
@@ -10,6 +10,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String, unique=True)
     password = db.Column(db.String(200))
     email = db.Column(db.String(32), unique=True)
+    posts = db.relationship('Post', backref='user', passive_deletes=True)
+    comments = db.relationship('Comment', backref='user', passive_deletes=True)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -38,8 +40,8 @@ class Post(db.Model):#class Post creates a user text post
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    comments = db.relationship('Comment', backref='title', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    comments = db.relationship('Comment', backref='post', passive_deletes=True)
 
     def get_comments(self):
         return Comment.query.filter_by(post_id=self.id).order_by(Comment.timestamp.desc())
@@ -50,8 +52,6 @@ class Post(db.Model):#class Post creates a user text post
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-
-    def __repr__(self):
-        return '<Post %r>' % (self.body)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)

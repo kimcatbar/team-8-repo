@@ -1,7 +1,7 @@
 from app import myapp_obj, db
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from app.forms import LoginForm, RegistrationForm, PostForm
-from app.models import User, Post
+from app.models import User, Post, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 from flask_login import login_required
@@ -81,3 +81,20 @@ def profile(username):
     posts = current_user.my_posts().all()#display all user posts in profile
     return render_template('user_profile.html', form = form, posts=posts)
   
+@myapp_obj.route("/create-comment/<post_id>", methods = ['POST'])
+@login_required
+def create_comment(post_id):
+    text = request.form.get('text')
+    if not text:
+        flash('Comment cannot be empty', category = 'error')
+    else:
+       post = Post.query.filter_by(id=post_id)
+       if post:
+            comment = Comment(body=text, user_id=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()  
+    return redirect(url_for("dashboard"))
+
+
+
+

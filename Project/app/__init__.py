@@ -3,7 +3,6 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-
 myapp_obj = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -21,6 +20,7 @@ login = LoginManager(myapp_obj)
 login.login_view = 'login'
 
 from app import routes, models
+
 
 with myapp_obj.app_context():
     db.create_all()

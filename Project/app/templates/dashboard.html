@@ -12,7 +12,7 @@
     <h1>Hello you are logged in.</h1>
     <a href="{{url_for('logout')}}">Press here to logout</a>
     <a href="{{url_for('delete')}}">Press here to delete account</a>
-    <h2>Hi, {{ current_user.username }}!</h2>
+    <h2>Hi, {{ current_user.username }}!</h2> 
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
@@ -24,9 +24,14 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
-    {% for post in posts %}
-        {% include "user_post.html" %}
-    {% endfor %}
+    <div>
+        <h3>Recent Posts</h3>  
+        {% for post in posts %}
+            {% include "user_post.html" %}
+        {% endfor %}
+    </div>
 </body>
+
+
 
 </html>
