@@ -1,25 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>{{ _('Log In') }}</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
 
-<body>
-    <h1>Login Page</h1>
+    <link type = "text/css" href="{{ url_for('static',filename='bootstrap.min.css') }}" rel="stylesheet">
 
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        {{ form.username }}
-        {{ form.password }}
-        {{ form.remember_me }}
-        {{ form.submit }}
-    </form>
+    <!-- Custom styles for this template -->
+    <link type = "text/css" href="{{ url_for('static',filename='signin.css') }}" rel="stylesheet">
+  </head>
+  <body>
+    
+<main class="form-signin w-100 m-auto">
+  <form action="" method="post" novalidate>
+    <h1 class="text-center h3 mb-3 fw-normal">{{ _('Please log in') }}</h1>
+    {{ form.hidden_tag() }}
+    <div class="text-center form-group">
+      {{ form.username(class_="form-control", size=32) }}
+    </div>
+    <div class="text-center form-group">
+      {{ form.password(class_="form-control", size=32) }}
+    </div>
 
-    <a href="{{ url_for('register') }}">Don't have an account? Sign Up</a>
-</body>
-
+    <div class="form-group">
+      {{ form.remember_me.label }}{{ form.remember_me(class_="form-check") }} 
+    </div>
+    {{ form.submit(class_="form-control") }}
+    <a href='/register'>{{ _("Don't have an account? Register") }}</a>
+  </form>
+</main>
+  </body>
 </html>

@@ -9,41 +9,23 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String, unique=True)
-    password = db.Column(db.String(200))
-    email = db.Column(db.String(32), unique=True)
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
-    followed = db.relationship('User',  #this is to link user to another user's account. This is a parent class
-        secondary=followers,
-        primaryjoin=(followers.c.follower_id == id),   #this is to link to the table with the condition is the follower's ID
-        secondaryjoin=(followers.c.followed_id == id), #to configured the table with the condition is the follow's ID
-        backref=db.backref('followers', lazy='dynamic'), lazy='dynamic') #to define the relationship start at follower to mode dynamic
-    #to let user can follower another users 
-     #it will presendted under the table which user an see who user currently follow
-    
+class User(db.Model, UserMixin):                                                # User class model
+    id = db.Column(db.Integer, primary_key = True)                              # User ID
+    username = db.Column(db.String, unique=True)                                # Username
+    password = db.Column(db.String(200))                                        # password         
+    posts = db.relationship('Post', backref='author', lazy='dynamic')           # establishing relationship between user and their posts
 
-    #this code is for the user's followers list. Relationship is many-to-many
-    # to let user know who currently follow them.
-    #the code db.relationship is to show relationship of the classs model  
-    def followed_posts(self):
-        followed = Post.query.join(
-            followers, (followers.c.followed_id == Post.user_id)).filter(
-                followers.c.follower_id == self.id)
-        own = Post.query.filter_by(user_id=self.id)
-        return followed.union(own).order_by(Post.timestamp.desc())
-        
-    def set_password(self, password):
+    def set_password(self, password):                                           # set password function
+
         self.password = generate_password_hash(password)
 
-    def check_password(self, password):
+    def check_password(self, password):                                         # check password function
         return check_password_hash(self.password, password)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
     
-    def remove(self):
+    def remove(self):                                                           # remove/delete account function
         db.session.delete(self)
     #this function is to let user can follow another user
     def follow(self, user):
@@ -67,29 +49,15 @@ class User(db.Model, UserMixin):
         return '<User %r>' % (self.username)
 
 @login.user_loader
-def load_user(id):
+def load_user(id):                                                             # return current user id
     return User.query.get(int(id))
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+class Post(db.Model):                                                           # post class model
+    id = db.Column(db.Integer, primary_key=True)                                # post ID
+    body = db.Column(db.String(140))                                            # main text for the post
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)     # post timestamp
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))                   # user ID that submitted the post
+    image = db.Column(db.String(20), nullable=True)                             # image file name
 
     def __repr__(self):
-        return '<Post {}>'.format(self.body)
-
-# class Message(db.Model):
-#     __tablename__ = 'messages'
-#     id = db.Column(db.Integer(), primary_key=True)
-#     url = db.Column(db.String())
-#     sender_id = db.Column(db.String())
-#     recipient_id = db.Column(db.String())
-#     subject = db.Column(db.String())
-#     body = db.Column(db.String())
-#     timestamp = db.Column(db.DateTime)
-#     read = db.Column(db.Boolean(), default=False)
-#     thread_id = db.Column(db.String())
-#     sender_del = db.Column(db.Boolean())
-#     recipient_del = db.Column(db.Boolean())
-    
+        return "<Post {}>".format(self.body)

@@ -1,29 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+{% extends "sidebar.html" %}
+{% block head %}
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
+    <title>{{ _('Home') }}</title>
+{% endblock %}
+{% block list %}
+<li class="nav-item">
+    <a href="/dashboard" class="nav-link active" aria-current="page">
+      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+      {{ _('Home') }}
+    </a>
+  </li>
+  <li>
+    <a href="/profile" class="nav-link text-white">
+      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+      {{ _('Profile') }}
+    </a>
+  </li>
+  <li>
+    <a href="/messages" class="nav-link text-white">
+      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#chat-quote-fill"/></svg>
+      {{ _('Messages') }}
+    </a>
+  </li>
+{% endblock %}
 
-<body>
-    <h1>Hello you are logged in.</h1>
-    <a href="{{url_for('logout')}}">Press here to logout</a>
-    <a href="{{url_for('delete')}}">Press here to delete account</a>
-</body>
-
-<table>
-    <tr valign="top">
-       
-        <td>
-            <h1>User: {{ user.username }}</h1>
-            <a href="{{ url_for('follow', username=user.username) }}">Follow</a>        
-            <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>         
-            </p>
-        </td>
-    </tr>
-</table>
-
-</html>
+{% block content %}
+<h1>{{ _('Hi, %(username)s!', username=current_user.username) }}</h1>
+    {% if form %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.post.label }}<br>
+            {{ form.post(cols=32, rows=4) }}<br>
+            {% for error in form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <div class="form-group">
+          {{ form.image.label() }}
+          {{ form.image(class="form-control-file") }}
+          {% if form.image.errors %}
+              {% for error in form.image.errors %}
+                  <span class="text-danger">{{ error }}</span></br>
+              {% endfor %}
+          {% endif %}
+      </div>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% endif %}
+    {% for post in posts %}
+        {% include "user_post.html" %}
+    {% endfor %}
+{% endblock %}
