@@ -102,7 +102,7 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                 <li><a class="dropdown-item" href="/settings">{{ _('Settings') }}</a></li>
-                <li><a class="dropdown-item" href="/profile">{{ _('Profile') }}</a></li>
+                <li><a class="dropdown-item" href="{{url_for('userProfile', username=current_user.username)}}">{{ _('Profile') }}</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{url_for('logout')}}">{{ _('Sign out') }}</a></li>
               </ul>

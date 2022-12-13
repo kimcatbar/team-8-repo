@@ -4,8 +4,10 @@
             <div class="text-muted pt-3 border-bottom">
                 <p class="pb-3 mb-0 small lh-sm"></p>
                 <p>
-                <strong class="d-block text-gray-dark">{{ current_user.username }}</strong>
-                   {{ _("says: ") }}<br>{{post.body}}<br>{{post.timestamp}}
+                <strong class="d-block text-gray-dark">{{ post.author.username }}</strong>
+                   {{ _("says: ") }}<br>{{post.body}}<br>{{post.timestamp}}{% if post.image %}
+                   <img src="{{ url_for('static', filename='images/' + post.image) }}" width="100" height="auto">
+                 {% endif %}
                 </p>
                 <br/>
                 <div class="" id="comments-{{post.id}}">

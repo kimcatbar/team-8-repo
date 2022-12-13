@@ -12,7 +12,7 @@
     </a>
   </li>
   <li>
-    <a href="/profile" class="nav-link active" aria-current="page">
+    <a href="{{url_for('userProfile',username=current_user.username)}}" class="nav-link active" aria-current="page">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
       {{ _('Profile') }}
     </a>
@@ -28,12 +28,49 @@
 {% block content %}
     <h1>{{ _('User:') }} {{ user.username }}</h1>
     <hr>
+    <div class="jumbotron">
+      {% if current_user.username != user.username %}
+      <form method="post" action="{{url_for('follow', username=user.username)}}">
+        {{ form.hidden_tag() }}
+        {{ form.submit(value=_('Follow'), class_='btn btn-primary') }}
+      </form>
+      &nbsp;
+      <form method="post" action="{{url_for('unfollow', username=user.username)}}">
+        {{ form.hidden_tag() }}
+        {{ form.submit(value=_('Unfollow'), class_='btn btn-danger') }}
+      </form>                         
+      {% endif %}     
+      <hr>
+      <a href="{{url_for('showFollowers', username=user.username)}}" class="btn btn-primary">
+      Followers <span class="badge badge-light">{{user.followers.all() | length}} </span>
+      </a>
+      <a href="{{url_for('showFollowing', username=user.username)}}" class="btn btn-success">
+      Following <span class="badge badge-light">{{user.followed.all() | length}} </span>
+      </a>
+      </div>
     {% for post in posts %}
     <p>
     {{ post.author.username }} {{ _('says:') }}' <b>{{ post.body }}</b>
     {% if post.image %}
       <img src="{{ url_for('static', filename='images/' + post.image) }}" width="100" height="100">
     {% endif %}
+    <div class="" id="comments-{{post.id}}">
+      <div class="card">
+           <div class="card-body" id="comments-expanded-{{post.id}}">
+               {% for comment in post.comments %}
+               <div class="d-flex justify-content-between align-items-center">
+                   <div>
+                       <a href="/user/{{comment.user.username}}">{{comment.user.username}}</a>:{{comment.body}} <br> {{comment.timestamp}} </br>
+                   </div>
+               </div>
+               {% endfor %}
+           </div>
+       </div>
+   </div>
+    <form class = "input-group mb-3" method = "POST" action ="/create-comment/{{post.id}}">
+      <input type = "txt" id="text" name="text" class ="form-control" placeholder="Comment here!"/>
+       <button type="submit" class="btn-btn primary"> {{ _('Comment') }}</button>
+  </form>
     </p>
     <br>
 {% endfor %} 

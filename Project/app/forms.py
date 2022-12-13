@@ -37,3 +37,6 @@ class PostForm(FlaskForm):                                              # post f
         DataRequired(), Length(min=1, max=280)])
     image = FileField(lazy_gettext('Add image to your post'), validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField(lazy_gettext('Submit'))
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')   

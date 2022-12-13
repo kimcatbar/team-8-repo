@@ -1,7 +1,7 @@
 from app import myapp_obj, db
 from flask_babel import _
-from flask import render_template, redirect, url_for, flash, request
-from app.forms import LoginForm, RegistrationForm, PostForm
+from flask import render_template, redirect, url_for, flash, request, abort
+from app.forms import LoginForm, RegistrationForm, PostForm, EmptyForm
 from app.models import User, Post, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
@@ -38,7 +38,7 @@ def dashboard():
     if form.validate_on_submit():                                                       # check if form is submitted
         if form.image.data:                                                             # if there is an image submitted
             picture = form.image.data
-            picture_name = uuid4() + picture.filename                                   # use uuid to make file name unique from other possible duplicates
+            picture_name = str(uuid4()) + picture.filename                                   # use uuid to make file name unique from other possible duplicates
             pic_path = os.path.join(myapp_obj.root_path, 'static\images', picture_name) # set the path of the image to a local folder in the project
             picture.save(pic_path)                                                      # save the picture at the specified path
         post = Post(body=form.post.data,author=current_user,image=picture_name)         # set post parameters
@@ -46,7 +46,7 @@ def dashboard():
         db.session.commit()                                                             # commit changes to database
         flash("Your post is live!")
         return redirect(url_for('dashboard'))                                           # redirect back to user home page
-    posts = current_user.my_posts().all()
+    posts = current_user.followed_posts()
     return render_template('dashboard.html',form=form,posts=posts)                      # return to user home page
 
 
@@ -87,21 +87,13 @@ def settings():
 def messages():
     return render_template('messages.html')
 
-@myapp_obj.route('/profile', methods=['GET', 'POST'])                                   # route to profile
-@login_required
-def profile():
-    user = current_user                                                                 # set the user
-    posts = user.posts.order_by(Post.timestamp.desc())                                  # display the user posts by order of timestamp
-    return render_template('profile.html', user=user, posts=posts)
-
 @myapp_obj.route('/user/<username>', methods=['GET','POST'])                            # route to other users' profiles 
 @login_required
-def user(username):
+def userProfile(username):
     user = User.query.filter_by(username=username).first_or_404()                      # check if user exists
     posts = user.posts.order_by(Post.timestamp.desc())                                 # display the user posts by order of timestamp
-    if username == current_user.username:                                              # if the selected user profile is the current logged in user, redirect to own profile
-        return redirect('/profile')
-    return render_template('profile.html', user=user,posts=posts)
+    form = EmptyForm()
+    return render_template('profile.html', user=user,posts=posts, form=form)
 
 @myapp_obj.route("/create-comment/<post_id>", methods = ['POST'])
 @login_required
@@ -116,3 +108,52 @@ def create_comment(post_id):
             db.session.add(comment)
             db.session.commit()  
     return redirect(request.referrer)
+
+@myapp_obj.route('/follow/<username>', methods=['POST'])
+@login_required
+def follow(username): #define the follow function to let the user can follow another user
+    form = EmptyForm()
+    if form.validate_on_submit(): #this get error when user enter incorrect another user's account
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found.'.format(username))
+            return redirect(request.referrer)
+        if user == current_user: #this will stop user to follow themself
+            flash('Try again. You cannot follow yourself!')
+            return redirect(url_for('userProfile', username=username))
+        current_user.follow(user)
+        db.session.commit()
+        flash('You are following {}!'.format(username))
+        return redirect(url_for('userProfile', username=username))
+    else:
+        return redirect(request.referrer)
+
+#this helps user can unfollow their followed
+@myapp_obj.route('/unfollow/<username>', methods=['POST'])
+@login_required
+def unfollow(username):
+    form = EmptyForm()
+    if form.validate_on_submit(): #this appears when the account user found doesn't exist
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            flash('User {} not found.'.format(username))
+            return redirect(request.referrer)
+        if user == current_user:  #this appears when the user follow themselves
+            flash('You cannot unfollow yourself!')
+            return redirect(url_for('userProfile', username=username))
+        current_user.unfollow(user)
+        db.session.commit()       #this appears the one user is following
+        flash('You have unfollowed {}.'.format(username))
+        return redirect(url_for('userProfile', username=username))
+    else:
+        return redirect(request.referrer)
+
+@myapp_obj.route('/user/<username>/following') #this is to show who are following the user's acc
+def showFollowing(username):
+	user = User.query.filter_by(username=username).first()
+	return render_template('userFollowing.html', users = user.followed.all()) #link to the userList.html
+
+@myapp_obj.route('/user/<username>/followers') #this is to show who user is currently following
+def showFollowers(username):
+	user = User.query.filter_by(username=username).first()
+	return render_template('userFollowers.html', users = user.followers.all()) ##link to the userList.html
