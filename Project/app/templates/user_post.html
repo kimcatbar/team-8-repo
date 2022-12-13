@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <table>
     <tr valign="top">
@@ -33,3 +34,19 @@
         </td>
     </tr>
 </table>
+=======
+<table>
+    <tr valign="top">
+        <td>
+            <a href="{{ url_for('user', username=post.author.username) }}">
+                {{post.author.username}}
+            </a> 
+            {{ _('says:') }}
+            <br>{{post.body}}
+            {% if post.image %}
+            <img src="{{ url_for('static', filename='images/' + post.image) }}" width="100" height="100">
+            {% endif %}
+        </td>
+    </tr>
+</table>
+>>>>>>> 99e062b783504f932acaad8708329281f25d3843
