@@ -1,5 +1,5 @@
 from app import myapp_obj, db
-from flask_babel import _
+from flask_babel import _, lazy_gettext
 from flask import render_template, redirect, url_for, flash, request
 from app.forms import LoginForm, RegistrationForm, PostForm, EmptyForm
 from app.models import User, Post, Comment
@@ -44,7 +44,7 @@ def dashboard():
         post = Post(body=form.post.data,author=current_user,image=picture_name)         # set post parameters
         db.session.add(post)                                                            # add post to database
         db.session.commit()                                                             # commit changes to database
-        flash("Your post is live!")
+        flash(_("Your post is live!"))
         return redirect(url_for('dashboard'))                                           # redirect back to user home page
     posts = current_user.followed_posts()
     return render_template('dashboard.html',form=form,posts=posts)                      # return to user home page
@@ -82,11 +82,6 @@ def delete():
 def settings():
     return render_template('settings.html')                                             # route to settings page
 
-@myapp_obj.route('/messages', methods=['GET', 'POST'])                                  # route to messages
-@login_required
-def messages():
-    return render_template('messages.html')
-
 @myapp_obj.route('/user/<username>', methods=['GET','POST'])                            # route to other users' profiles 
 @login_required
 def userProfile(username):
@@ -95,19 +90,19 @@ def userProfile(username):
     form = EmptyForm()
     return render_template('profile.html', user=user,posts=posts, form=form)
 
-@myapp_obj.route("/create-comment/<post_id>", methods = ['POST'])
+@myapp_obj.route("/create-comment/<post_id>", methods = ['POST'])                       # route to create a comment
 @login_required
-def create_comment(post_id):
+def create_comment(post_id):                                                            # using HTML form to get text
     text = request.form.get('text')
     if not text:
-        flash('Comment cannot be empty', category = 'error')
+        flash(_('Comment cannot be empty'), category = 'error')                         # error if no text
     else:
-       post = Post.query.filter_by(id=post_id)
+       post = Post.query.filter_by(id=post_id)                                          # find the corresponding post
        if post:
-            comment = Comment(body=text, user_id=current_user.id, post_id=post_id)
+            comment = Comment(body=text, user_id=current_user.id, post_id=post_id)      # set comment values and add it, then commit to database
             db.session.add(comment)
             db.session.commit()  
-    return redirect(request.referrer)
+    return redirect(request.referrer)                                                   # redirect to original location
 
 @myapp_obj.route('/follow/<username>', methods=['POST'])
 @login_required
@@ -116,14 +111,14 @@ def follow(username): #define the follow function to let the user can follow ano
     if form.validate_on_submit(): #this get error when user enter incorrect another user's account
         user = User.query.filter_by(username=username).first()
         if user is None:
-            flash('User {} not found.'.format(username))
+            flash(lazy_gettext('User %(username)s not found.', username=username))
             return redirect(request.referrer)
         if user == current_user: #this will stop user to follow themself
-            flash('Try again. You cannot follow yourself!')
+            flash(_('Try again. You cannot follow yourself!'))
             return redirect(url_for('userProfile', username=username))
         current_user.follow(user)
         db.session.commit()
-        flash('You are following {}!'.format(username))
+        flash(lazy_gettext('You are following %(username)s!', username=username))
         return redirect(url_for('userProfile', username=username))
     else:
         return redirect(request.referrer)
@@ -136,14 +131,14 @@ def unfollow(username):
     if form.validate_on_submit(): #this appears when the account user found doesn't exist
         user = User.query.filter_by(username=username).first()
         if user is None:
-            flash('User {} not found.'.format(username))
+            flash(lazy_gettext('User %(username)s not found.', username=username))
             return redirect(request.referrer)
         if user == current_user:  #this appears when the user follow themselves
-            flash('You cannot unfollow yourself!')
+            flash(_('You cannot unfollow yourself!'))
             return redirect(url_for('userProfile', username=username))
         current_user.unfollow(user)
         db.session.commit()       #this appears the one user is following
-        flash('You have unfollowed {}.'.format(username))
+        flash(lazy_gettext('You have unfollowed %(username)s.', username=username))
         return redirect(url_for('userProfile', username=username))
     else:
         return redirect(request.referrer)

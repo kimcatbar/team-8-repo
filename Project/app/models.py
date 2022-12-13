@@ -37,22 +37,6 @@ class User(db.Model, UserMixin):                                                
     def remove(self):                                                           # remove/delete account function
         db.session.delete(self)
     #this function is to let user can follow another user
-    def follow(self, user):
-        if not self.is_following(user): 
-            self.followed.append(user) #this funtion append() is called for the follow function
-            return self
-     #this function is to let user unfollow the followers
-    def unfollow(self, user):
-        if self.is_following(user): 
-            self.followed.remove(user) #this function remove() is called for the unfollow function
-            return self 
-    #the user contains two elements: followed and followers. Therefore they can check if they follow each other or not
-    def is_following(self, user): #this is to check if a link of two users currently follow each other or not
-        return self.followed.filter(
-            self.followers.c.followed_id == user.id).count() > 0 #count function is to return number of results
-
-    def followed_posts(self):
-        return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
 
     def __repr__(self):
         return '<User %r>' % (self.username)
@@ -93,7 +77,7 @@ class Post(db.Model):                                                           
     def __repr__(self):
         return "<Post {}>".format(self.body)
 
-class Comment(db.Model):
+class Comment(db.Model):                                                        # Comment class with id, text body, timestamp, user ID, and the post ID
     id = db.Column(db.Integer, primary_key = True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

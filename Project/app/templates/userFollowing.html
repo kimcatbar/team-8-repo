@@ -4,9 +4,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ _('Following') }}</title>
 {% endblock %}
+{% block list %}
+<li class="nav-item">
+    <a href="/dashboard" class="nav-link text-white">
+      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+      {{ _('Home') }}
+    </a>
+  </li>
+  <li>
+    <a href="{{url_for('userProfile', username=current_user.username)}}" class="nav-link text-white">
+      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+      {{ _('Profile') }}
+    </a>
+  </li>
+{% endblock %}
 {% block content %}
 <div class="jumbotron">
-  <h1>Following</h1>
+  <h1>{{ _('Following') }}</h1>
   <p>
   {% for user in users%}
 		<a href="{{url_for('userProfile', username=user.username)}}">{{user.username}}</a>

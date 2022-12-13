@@ -1,21 +1,18 @@
 <!-- extend base layout -->
 {% extends "dashboard.html" %}
-
 {% block content %}
   <table>
       <tr valign="top">
           <td><img src="{{ user.username(128) }}"></td>
           <td>
-              <h1>User: {{ user.nickname }}</h1>
+              <h1>{{ _('User:') }} {{ user.nickname }}</h1>
               {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-              {% if user.last_seen %}<p><i>Last seen on: {{ user.last_seen }}</i></p>{% endif %}
-              <p>{{ user.followers.count() }} followers | 
-              {% if user.id == g.user.id %}
-                  <a href="{{ url_for('edit') }}">Edit your profile</a>
-              {% elif not g.user.is_following(user) %}
-                  <a href="{{ url_for('follow', username=user.username) }}">Follow</a>
+              {% if user.last_seen %}<p><i>{{ _('Last seen on: ') }}{{ user.last_seen }}</i></p>{% endif %}
+              <p>{{ user.followers.count() }} {{ _('followers') }} | 
+              {% if not g.user.is_following(user) %}
+                  <a href="{{ url_for('follow', username=user.username) }}">{{ _('Follow') }}</a>
               {% else %}
-                  <a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+                  <a href="{{ url_for('unfollow', username=user.username) }}">{{ _('Unfollow') }}</a>
               {% endif %}
               </p>
           </td>

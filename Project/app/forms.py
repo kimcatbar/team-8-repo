@@ -31,7 +31,7 @@ class RegistrationForm(FlaskForm):                                         # reg
             username=username.data).first()
         if existing_user_username:
             raise ValidationError(
-                'That username already exists. Please choose a different one.')
+                lazy_gettext('That username already exists. Please choose a different one.'))
 
 class PostForm(FlaskForm):                                              # post form with post body, image, and submit fields
     post = TextAreaField(lazy_gettext('Post Something'), validators=[
@@ -39,5 +39,5 @@ class PostForm(FlaskForm):                                              # post f
     image = FileField(lazy_gettext('Add image to your post'), validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField(lazy_gettext('Submit'))
 
-class EmptyForm(FlaskForm):
-    submit = SubmitField('Submit')   
+class EmptyForm(FlaskForm):                                             # submit form for follow and unfollow
+    submit = SubmitField(lazy_gettext('Submit'))   

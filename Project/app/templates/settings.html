@@ -1,8 +1,6 @@
 {% extends "sidebar.html" %}
-
 {% block head %}
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ _('Settings') }}</title>
 {% endblock %}
@@ -19,13 +17,9 @@
       {{ _('Profile') }}
     </a>
   </li>
-  <li>
-    <a href="/messages" class="nav-link text-white">
-      <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#chat-quote-fill"/></svg>
-      {{ _('Messages') }}
-    </a>
-  </li>
 {% endblock %}
 {% block content %}
-    <div><a href="{{ url_for('delete') }}">{{ _('Click here to delete account') }}</a></div>
+<form action="{{ url_for('delete') }}" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');">
+  <button type="submit" class="btn btn-danger"> {{ _('Delete Account') }}</button>
+  </form>
 {% endblock %}

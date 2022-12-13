@@ -1,0 +1,188 @@
+# Chinese translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-12-13 00:35-0800\n"
+"PO-Revision-Date: 2022-12-13 00:37-0800\n"
+"Last-Translator: \n"
+"Language-Team: zh <LL@li.org>\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.11.0\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: app/forms.py:11 app/forms.py:22
+#, python-format
+msgid "Username"
+msgstr "用户名"
+
+#: app/forms.py:14 app/forms.py:25
+msgid "Password"
+msgstr "密码"
+
+#: app/forms.py:16
+msgid "Remember me"
+msgstr "记住我"
+
+#: app/forms.py:18 app/templates/index.html:76
+msgid "Login"
+msgstr "登录"
+
+#: app/forms.py:27 app/templates/index.html:77 app/templates/index.html:86
+#: app/templates/register.html:7 app/templates/register.html:20
+msgid "Register"
+msgstr "注册"
+
+#: app/forms.py:34
+msgid "That username already exists. Please choose a different one."
+msgstr "该用户名已经存在。请选择一个不同的。"
+
+#: app/forms.py:37
+msgid "Post Something"
+msgstr "发表的东西"
+
+#: app/forms.py:39
+msgid "Add image to your post"
+msgstr "在你的帖子中添加图片"
+
+#: app/forms.py:40 app/forms.py:43
+msgid "Submit"
+msgstr "提交"
+
+#: app/routes.py:47
+msgid "Your post is live!"
+msgstr "你的帖子已经上线了!"
+
+#: app/routes.py:77
+msgid "Account has been deleted."
+msgstr "帐户已被删除."
+
+#: app/routes.py:98
+msgid "Comment cannot be empty"
+msgstr "注释不能为空"
+
+#: app/routes.py:114 app/routes.py:134
+#, python-format
+msgid "User %(username)s not found."
+msgstr "%(username)s 用户不存在。"
+
+#: app/routes.py:117
+msgid "Try again. You cannot follow yourself!"
+msgstr "再试一次。你不能跟随你自己！"
+
+#: app/routes.py:121
+#, python-format
+msgid "You are following %(username)s!"
+msgstr "您已关注 %(username)s！"
+
+#: app/routes.py:137
+msgid "You cannot unfollow yourself!"
+msgstr "不可以取消关注 自己！"
+
+#: app/routes.py:141
+#, python-format
+msgid "You have unfollowed %(username)s."
+msgstr "您已取消关注 %(username)s."
+
+#: app/templates/dashboard.html:5 app/templates/dashboard.html:11
+#: app/templates/index.html:75 app/templates/profile.html:11
+#: app/templates/settings.html:11 app/templates/userFollowers.html:11
+#: app/templates/userFollowing.html:11
+msgid "Home"
+msgstr "首页"
+
+#: app/templates/dashboard.html:17 app/templates/profile.html:5
+#: app/templates/profile.html:17 app/templates/settings.html:17
+#: app/templates/sidebar.html:102 app/templates/userFollowers.html:17
+#: app/templates/userFollowing.html:17
+msgid "Profile"
+msgstr "个人资料"
+
+#: app/templates/dashboard.html:23
+#, python-format
+msgid "Hi, %(username)s!"
+msgstr "你好，%(username)s！"
+
+#: app/templates/index.html:84
+msgid "This is the social media project for CMPE 131."
+msgstr "这是 CMPE 131 的社交媒体项目。"
+
+#: app/templates/index.html:91
+msgid "Link"
+msgstr "关联"
+
+#: app/templates/login.html:7
+msgid "Log In"
+msgstr "登录"
+
+#: app/templates/login.html:20
+msgid "Please log in"
+msgstr "请登录"
+
+#: app/templates/login.html:33
+msgid "Don't have an account? Register"
+msgstr "没有帐户？登记"
+
+#: app/templates/profile.html:23 app/templates/user.html:8
+msgid "User:"
+msgstr "用户："
+
+#: app/templates/profile.html:29 app/templates/user.html:13
+msgid "Follow"
+msgstr "跟随"
+
+#: app/templates/profile.html:34 app/templates/user.html:15
+msgid "Unfollow"
+msgstr "取消关注"
+
+#: app/templates/profile.html:47
+msgid "says:"
+msgstr "说："
+
+#: app/templates/profile.html:66 app/templates/user_post.html:31
+msgid "Comment"
+msgstr "评论"
+
+#: app/templates/register.html:29
+msgid "Already have an account? Log in"
+msgstr "已有帐户？登录"
+
+#: app/templates/settings.html:5 app/templates/sidebar.html:101
+msgid "Settings"
+msgstr "设置"
+
+#: app/templates/settings.html:23
+msgid "Delete Account"
+msgstr "删除帐户"
+
+#: app/templates/sidebar.html:104
+msgid "Sign out"
+msgstr "登出"
+
+#: app/templates/user.html:10
+msgid "Last seen on: "
+msgstr "最后一次出现于： "
+
+#: app/templates/user.html:11
+msgid "followers"
+msgstr "追随者"
+
+#: app/templates/userFollowers.html:5 app/templates/userFollowers.html:23
+msgid "Followers"
+msgstr "追随者"
+
+#: app/templates/userFollowing.html:5 app/templates/userFollowing.html:23
+msgid "Following"
+msgstr "下列的"
+
+#: app/templates/user_post.html:8
+msgid "says: "
+msgstr "说： "
