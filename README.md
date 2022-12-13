@@ -14,7 +14,7 @@ Antony Li (antonyli98)
 - User homepage 
 - Post with image capabilites 
 - Multilingual support (Spanish and Chinese)
-- Bootstrap UI implemintation 
+- Bootstrap UI implementation 
 - Works on Chrome Browser
 
 Ngoc Mai (Ngocmai139)
