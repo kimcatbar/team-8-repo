@@ -39,5 +39,5 @@ class PostForm(FlaskForm):                                              # post f
     image = FileField(lazy_gettext('Add image to your post'), validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField(lazy_gettext('Submit'))
 
-class EmptyForm(FlaskForm):                                             # submit form for follow and unfollow
-    submit = SubmitField(lazy_gettext('Submit'))   
+class EmptyForm(FlaskForm):                                             # submit form for follow and unfollow   
+    submit = SubmitField(lazy_gettext('Submit'))
