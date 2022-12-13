@@ -1,6 +1,6 @@
 from app import myapp_obj, db
 from flask_babel import _
-from flask import render_template, redirect, url_for, flash, request, abort
+from flask import render_template, redirect, url_for, flash, request
 from app.forms import LoginForm, RegistrationForm, PostForm, EmptyForm
 from app.models import User, Post, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
