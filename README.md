@@ -1,23 +1,30 @@
 # team-8-repo
 Repository for CMPE-131 Final Project Fall 2022 
 
+## Team Members and Functional/Non Functional Requirements 
 Team Lead: Kimberly Catalina Manzano (kimcatbar) 
+- Create a post
+- User profile
+- Reply to post
+- Bootstrap UI implemintation
+- Web broswer only 
 
 Antony Li (antonyli98) 
+- Delete
+- User homepage 
+- Post with image capabilites 
+- Multilingual support 
+- Bootstrap UI implemintation 
+- Works on Chrome Browser
 
 Ngoc Mai (Ngocmai139)
+- View followers 
+- Reply to posts
 
 Tanveer Singh Kahlon (TanveerKahlon)
-
-Repository for CMPE-131 Final Project Fall 2022 
-
-Team Lead: Kimberly Catalina Manzano (kimcatbar) 
-
-Antony Li (antonyli98) 
-
-Ngoc Mai (Ngocmai139)
-
-Tanveer Singh Kahlon (TanveerKahlon)
+- Login
+- Logout 
+- Create a new account 
 
 ## Title: Twitter Application for CMPE-131 Fall 2022 by Team-8
 
