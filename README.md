@@ -55,7 +55,7 @@ The following libraries, database and frameworks are necessary to run this appli
 
 1. Download project repository and store it on your computer
 2. Make sure IDE supports python3 by locating the current version installed on your computer 
-3. Create a virtual environement by inputting the command python3 -m venv <name of environment>
+3. Create a virtual environement by inputting the command python3 -m venv "name of environment"
 4. Once the virtual environment has been initiated, you might need to select an interpeter to run the applicatio
 5. Find the file path in the virtual environment file (venv) that runs python3 and paste it View > Command Pallete.(see image below)
 6. Run the command: python run.py from the Project folder. 
