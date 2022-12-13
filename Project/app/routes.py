@@ -75,7 +75,7 @@ def delete():
     current_user.remove()                                                               # remove the current user
     db.session.commit()                                                                 # commit the changes
     flash(_("Account has been deleted."))                                               
-    return redirect('/')                                                                # redirect to splash page
+    return redirect('/login')                                                           # redirect to login page
 
 @myapp_obj.route('/settings', methods=['GET', 'POST'])
 @login_required
