@@ -12,7 +12,7 @@ myapp_obj.config.update(                                                        
     SECRET_KEY='this-is-a-secret',
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db'),
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
-    LANGUAGES = ['en', 'es']
+    LANGUAGES = ['en', 'es', 'zh']
 )
 
 db = SQLAlchemy(myapp_obj)          # set db as database variable for the app

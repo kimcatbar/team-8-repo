@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-12-08 15:14-0800\n"
+"POT-Creation-Date: 2022-12-13 00:35-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,83 +17,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: app/forms.py:10 app/forms.py:21
+#: app/forms.py:11 app/forms.py:22
 msgid "Username"
 msgstr ""
 
-#: app/forms.py:13 app/forms.py:24
+#: app/forms.py:14 app/forms.py:25
 msgid "Password"
 msgstr ""
 
-#: app/forms.py:15
+#: app/forms.py:16
 msgid "Remember me"
 msgstr ""
 
-#: app/forms.py:17 app/templates/index.html:84
+#: app/forms.py:18 app/templates/index.html:76
 msgid "Login"
 msgstr ""
 
-#: app/forms.py:26 app/templates/index.html:85 app/templates/index.html:94
-#: app/templates/register.html:9 app/templates/register.html:22
+#: app/forms.py:27 app/templates/index.html:77 app/templates/index.html:86
+#: app/templates/register.html:7 app/templates/register.html:20
 msgid "Register"
 msgstr ""
 
-#: app/forms.py:36
+#: app/forms.py:34
+msgid "That username already exists. Please choose a different one."
+msgstr ""
+
+#: app/forms.py:37
 msgid "Post Something"
 msgstr ""
 
-#: app/forms.py:38
+#: app/forms.py:39
 msgid "Add image to your post"
 msgstr ""
 
-#: app/forms.py:39
+#: app/forms.py:40 app/forms.py:43
 msgid "Submit"
 msgstr ""
 
-#: app/routes.py:80
+#: app/routes.py:47
+msgid "Your post is live!"
+msgstr ""
+
+#: app/routes.py:77
 msgid "Account has been deleted."
 msgstr ""
 
-#: app/templates/dashboard.html:12 app/templates/index.html:83
-#: app/templates/messages.html:13 app/templates/profile.html:12
-#: app/templates/settings.html:13
+#: app/routes.py:98
+msgid "Comment cannot be empty"
+msgstr ""
+
+#: app/routes.py:114 app/routes.py:134
+#, python-format
+msgid "User %(username)s not found."
+msgstr ""
+
+#: app/routes.py:117
+msgid "Try again. You cannot follow yourself!"
+msgstr ""
+
+#: app/routes.py:121
+#, python-format
+msgid "You are following %(username)s!"
+msgstr ""
+
+#: app/routes.py:137
+msgid "You cannot unfollow yourself!"
+msgstr ""
+
+#: app/routes.py:141
+#, python-format
+msgid "You have unfollowed %(username)s."
+msgstr ""
+
+#: app/templates/dashboard.html:5 app/templates/dashboard.html:11
+#: app/templates/index.html:75 app/templates/profile.html:11
+#: app/templates/settings.html:11 app/templates/userFollowers.html:11
+#: app/templates/userFollowing.html:11
 msgid "Home"
 msgstr ""
 
-#: app/templates/dashboard.html:18 app/templates/messages.html:19
-#: app/templates/profile.html:6 app/templates/profile.html:18
-#: app/templates/settings.html:19 app/templates/sidebar.html:105
+#: app/templates/dashboard.html:17 app/templates/profile.html:5
+#: app/templates/profile.html:17 app/templates/settings.html:17
+#: app/templates/sidebar.html:102 app/templates/userFollowers.html:17
+#: app/templates/userFollowing.html:17
 msgid "Profile"
 msgstr ""
 
-#: app/templates/dashboard.html:24 app/templates/messages.html:7
-#: app/templates/messages.html:25 app/templates/profile.html:24
-#: app/templates/settings.html:25
-msgid "Messages"
-msgstr ""
-
-#: app/templates/dashboard.html:30
+#: app/templates/dashboard.html:23
 #, python-format
 msgid "Hi, %(username)s!"
 msgstr ""
 
-#: app/templates/home.html:12
-msgid "Login Authentication System in Flask."
-msgstr ""
-
-#: app/templates/home.html:13
-msgid "Login Page"
-msgstr ""
-
-#: app/templates/home.html:14
-msgid "Register Page"
-msgstr ""
-
-#: app/templates/index.html:92
+#: app/templates/index.html:84
 msgid "This is the social media project for CMPE 131."
 msgstr ""
 
-#: app/templates/index.html:99
+#: app/templates/index.html:91
 msgid "Link"
 msgstr ""
 
@@ -109,27 +128,59 @@ msgstr ""
 msgid "Don't have an account? Register"
 msgstr ""
 
-#: app/templates/profile.html:30
+#: app/templates/profile.html:23 app/templates/user.html:8
 msgid "User:"
 msgstr ""
 
-#: app/templates/register.html:31
+#: app/templates/profile.html:29 app/templates/user.html:13
+msgid "Follow"
+msgstr ""
+
+#: app/templates/profile.html:34 app/templates/user.html:15
+msgid "Unfollow"
+msgstr ""
+
+#: app/templates/profile.html:47
+msgid "says:"
+msgstr ""
+
+#: app/templates/profile.html:66 app/templates/user_post.html:31
+msgid "Comment"
+msgstr ""
+
+#: app/templates/register.html:29
 msgid "Already have an account? Log in"
 msgstr ""
 
-#: app/templates/settings.html:7 app/templates/sidebar.html:104
+#: app/templates/settings.html:5 app/templates/sidebar.html:101
 msgid "Settings"
 msgstr ""
 
-#: app/templates/settings.html:30
-msgid "Click here to delete account"
+#: app/templates/settings.html:23
+msgid "Delete Account"
 msgstr ""
 
-#: app/templates/sidebar.html:107
+#: app/templates/sidebar.html:104
 msgid "Sign out"
 msgstr ""
 
-#: app/templates/user_post.html:7
-msgid "says:"
+#: app/templates/user.html:10
+msgid "Last seen on: "
+msgstr ""
+
+#: app/templates/user.html:11
+msgid "followers"
+msgstr ""
+
+#: app/templates/userFollowers.html:5 app/templates/userFollowers.html:23
+msgid "Followers"
+msgstr ""
+
+#: app/templates/userFollowing.html:5 app/templates/userFollowing.html:23
+msgid "Following"
+msgstr ""
+
+#: app/templates/user_post.html:8
+msgid "says: "
 msgstr ""
 
