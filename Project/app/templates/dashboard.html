@@ -12,7 +12,7 @@
     </a>
   </li>
   <li>
-    <a href="/profile" class="nav-link text-white">
+    <a href="{{url_for('userProfile', username=current_user.username)}}" class="nav-link text-white">
       <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
       {{ _('Profile') }}
     </a>
@@ -39,7 +39,7 @@
         </p>
         <div class="form-group">
           {{ form.image.label() }}
-          {{ form.image(class="form-control-file") }}
+          <br>{{ form.image(class="form-control-file") }}</br>
           {% if form.image.errors %}
               {% for error in form.image.errors %}
                   <span class="text-danger">{{ error }}</span></br>
