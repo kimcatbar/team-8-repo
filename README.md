@@ -6,7 +6,7 @@ Team Lead: Kimberly Catalina Manzano (kimcatbar)
 - Create a post
 - User profile
 - Reply to post
-- Bootstrap UI implemintation
+- Bootstrap UI implementation
 - Web broswer only 
 
 Antony Li (antonyli98) 
@@ -42,7 +42,7 @@ Tanveer Singh Kahlon (TanveerKahlon)
 The goal of this project was to create a social media application that mimicked the functionalities of Twitter. While Twitter can be used on a smartphone as a mobile app, our Twitter clone can only run on a web browser. Team 8's social media application is able to register new users, follow other users and reply to their posts. 
 
 ### Technologies 
-The following libraries, database and frameworks are necessary to run this application 
+The following libraries, database and frameworks are necessary to run this application:
 1. VS Code or any IDE that supports Python3 
 2. Virtual Environment 
 3. Flask 
@@ -56,15 +56,15 @@ The following libraries, database and frameworks are necessary to run this appli
 1. Download project repository and store it on your computer
 2. Make sure IDE supports python3 by locating the current version installed on your computer 
 3. Create a virtual environement by inputting the command python3 -m venv "name of environment"
-4. Once the virtual environment has been initiated, you might need to select an interpeter to run the applicatio
-5. Find the file path in the virtual environment file (venv) that runs python3 and paste it View > Command Pallete.(see image below)
+4. Once the virtual environment has been initiated, you might need to select an interpeter to run the application
+5. Find the file path in the virtual environment file (venv) that runs python3 and paste it to View > Command Pallette.(see image below)
 6. Run the command: python run.py from the Project folder. 
  <img width="607" alt="Screenshot 2022-12-12 at 11 10 38 PM" src="https://user-images.githubusercontent.com/113465921/207249970-2a7470aa-8815-49c2-b5a3-85abe9fe7038.png">
   
 
 ### Scope of functionalities
 1. Application Homepage 
-   - The applications homepage welcomes the user the socail media website and gives them the option to login, register or            be redirected to our project repository. 
+   - The applications homepage welcomes the user the social media website and gives them the option to login, register or be redirected to our project repository. 
 2. Register
    - If this is your first time visiting the website, create an account by choosing a username and password in the Register link. 
 3. Login Page 
@@ -72,7 +72,7 @@ The following libraries, database and frameworks are necessary to run this appli
 4. User Homepage
    - You will now be in your user homepage where you can create a text post, image post, view your follower's posts, and reply to follower's posts. From the user homepage, you can access the user settings, logout and access your user profile. 
 5. User Profile 
-   - Your user profile displays the ammount of followers you have, the ammount of people you follow, and most importantly it displays any posts you have created with comments other users might have added. 
+   - Your user profile displays the amount of followers you have, the amount of people you follow, and most importantly it displays any posts you have created with comments other users might have added. 
 6. Settings
    - The user setting allows the user to delete their account. 
 
