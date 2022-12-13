@@ -1,0 +1,16 @@
+{% extends "sidebar.html" %}
+{% block head %}
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ _('Following') }}</title>
+{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <h1>Following</h1>
+  <p>
+  {% for user in users%}
+		<a href="{{url_for('userProfile', username=user.username)}}">{{user.username}}</a>
+  {% endfor %}
+</p>
+</div>
+{% endblock %}
