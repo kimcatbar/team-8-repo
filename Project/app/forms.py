@@ -39,15 +39,9 @@ class RegistrationForm(FlaskForm):
 class MessageForm(FlaskForm):
     message = TextAreaField(('Message'), validators=[
         DataRequired(), Length(min=1, max=500)])
-    submit = SubmitField(('Submit'))
-#this is to create submit button for the user to send the message 
+    submit = SubmitField(('Submit')) #this is to create submit button for the user to send the message 
+#this is to create information button for the user to send the message 
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')   
 
-#ANTONY CODE
-# class PostForm(FlaskForm):
-#     post = TextAreaField(lazy_gettext('Post Something'), validators=[
-#         DataRequired(), Length(min=1, max=280)])
-    # image = FileField(lazy_gettext('Add image to your post'), validators=[FileAllowed(['jpg', 'png'])])
-    # submit = SubmitField(lazy_gettext('Submit'))
 

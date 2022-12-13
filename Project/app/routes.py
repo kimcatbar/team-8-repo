@@ -1,25 +1,20 @@
 from app import myapp_obj, db
 from flask import render_template, redirect, url_for, flash, request, abort
 from app.forms import LoginForm, RegistrationForm, EmptyForm
-from app.models import User, Post, Comment
+from app.models import User, Message, Post
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
-from datetime import datetime
 from flask_login import login_user, logout_user, current_user, login_required
-from werkzeug.urls import url_parse
 from app.forms import MessageForm
-from app.models import Message
-from flask_babel import _ #ANTONY CODE
 
 
 @myapp_obj.route('/home',methods=['GET', 'POST'] )
 @myapp_obj.route('/',methods=['GET', 'POST'] )
 def home():
-    posts = Post.query.all()
-    return render_template("home.html", user=current_user, posts=posts)
+    return render_template("home.html")
 
 
 @myapp_obj.route('/login', methods=['GET', 'POST'])           #when a user logs in it checks with the database if the user exists
@@ -93,16 +88,16 @@ def follow(username): #define the follow function to let the user can follow ano
 @login_required
 def unfollow(username):
     form = EmptyForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit(): #this appears when the account user found doesn't exist
         user = User.query.filter_by(username=username.data).first()
         if user is None:
             flash('User {} not found.'.format(username.data))
             return redirect(url_for('index'))
-        if user == current_user:
+        if user == current_user:  #this appears when the user follow themselves
             flash('You cannot unfollow yourself!')
             return redirect(url_for('user', username=username.data))
         current_user.unfollow(user)
-        db.session.commit()
+        db.session.commit()       #this appears the one user is following
         flash('You are not following {}.'.format(username.data))
         return redirect(url_for('user', username=username.data))
     else:
@@ -128,7 +123,7 @@ def getUser(username):
 @login_required
 def user(username):
     form = EmptyForm()
-    return render_template('user.html', user=user, posts=Post, form=form)
+    return render_template('user.html', user=user, form=form)
 
 @myapp_obj.route('/', methods=['GET', 'POST']) 
 @myapp_obj.route('/index', methods=['GET', 'POST'])
@@ -157,50 +152,3 @@ def send_message(recipient):
     return render_template('send_message.html', title=('Send Message'),
                            form=form, recipient=recipient)
 
-@myapp_obj.route("/create-post", methods=['GET', 'POST'])
-@login_required
-def create_post():
-    if request.method == "POST":
-        text = request.form.get('text')
-
-        if not text:
-            flash('Post cannot be empty', category='error')
-        else:
-            post = Post(text=text, author=current_user.id)
-            db.session.add(post)
-            db.session.commit()
-            flash('Post created!', category='success')
-            return redirect(url_for('views.home'))
-
-    return render_template('create_post.html', user=current_user)
-
-@myapp_obj.route("/posts/<username>")
-@login_required
-def posts(username):
-    user = User.query.filter_by(username=username).first()
-
-    if not user:
-        flash('No user with that username exists.', category='error')
-        return redirect(url_for('views.home'))
-
-    posts = user.posts
-    return render_template("posts.html", user=current_user, posts=posts, username=username)
-
-@myapp_obj.route("/create-comment/<post_id>", methods=['POST'])
-@login_required
-def create_comment(post_id):
-    text = request.form.get('text')
-
-    if not text:
-        flash('Comment cannot be empty.', category='error')
-    else:
-        post = Post.query.filter_by(id=post_id)
-        if post:
-            comment = Comment(
-                text=text, user=current_user.id, post_id=post_id)
-            db.session.add(comment)
-            db.session.commit()
-        else:
-            flash('Post does not exist.', category='error')
-
-    return redirect(url_for('dashboard.html'))
