@@ -13,7 +13,7 @@ Antony Li (antonyli98)
 - Delete
 - User homepage 
 - Post with image capabilites 
-- Multilingual support 
+- Multilingual support (Spanish and Chinese)
 - Bootstrap UI implemintation 
 - Works on Chrome Browser
 
