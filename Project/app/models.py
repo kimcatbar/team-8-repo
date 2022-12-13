@@ -1,6 +1,6 @@
 from app import db
-from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 from app import login
 from flask_login import UserMixin
 #to create the followers table based on the follower's ID and user's ID
@@ -14,9 +14,9 @@ class User(db.Model, UserMixin):                                                
     username = db.Column(db.String, unique=True)                                # Username
     password = db.Column(db.String(200))                                        # password         
     posts = db.relationship('Post', backref='author', lazy='dynamic')           # establishing relationship between user and their posts
+    comments = db.relationship('Comment', backref='user', passive_deletes=True)
 
     def set_password(self, password):                                           # set password function
-
         self.password = generate_password_hash(password)
 
     def check_password(self, password):                                         # check password function
@@ -27,6 +27,14 @@ class User(db.Model, UserMixin):                                                
     
     def remove(self):                                                           # remove/delete account function
         db.session.delete(self)
+        
+    def my_posts(self):
+        own = Post.query.filter_by(user_id=self.id)
+        return own.order_by(Post.timestamp.desc())
+    
+    def blog_posts(self):
+        return Post.query.order_by(Post.timestamp.desc())
+    
     #this function is to let user can follow another user
     def follow(self, user):
         if not self.is_following(user): 
@@ -58,6 +66,14 @@ class Post(db.Model):                                                           
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)     # post timestamp
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))                   # user ID that submitted the post
     image = db.Column(db.String(20), nullable=True)                             # image file name
+    comments = db.relationship('Comment', backref='post', passive_deletes=True)
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)

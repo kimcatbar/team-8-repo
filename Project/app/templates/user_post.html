@@ -9,6 +9,27 @@
             {% if post.image %}
             <img src="{{ url_for('static', filename='images/' + post.image) }}" width="100" height="100">
             {% endif %}
+            <div class="" id="comments-{{post.id}}">
+                <div class="card">
+                     <div class="card-body" id="comments-expanded-{{post.id}}">
+                         {% for comment in post.comments %}
+                         <div class="d-flex justify-content-between align-items-center"
+                          >
+                             <div>
+                                 <a href="/user/{{comment.user.username}}">{{comment.user.username}}</a>:{{comment.body}}
+                             </div>
+
+                         </div>
+                         {% endfor %}
+                     </div>
+                 </div>
+             </div>
+
+             <form class = "input-group mb-3" method = "POST" action ="/create-comment/{{post.id}}">
+                 <input type = "txt" id="text" name="text" class ="form-control" placeholder="Comment here!"/>
+                  <button type="submit" class="btn-btn primary"> Comment</button>
+             </form>
+         </div>
         </td>
     </tr>
 </table>
