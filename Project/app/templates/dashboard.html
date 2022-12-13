@@ -2,38 +2,6 @@
 {% block head %}
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
-    <title>Dashboard</title>
-</head>
-
-<body>
-    <h1>Hello you are logged in.</h1>
-    <a href="{{url_for('logout')}}">Press here to logout</a>
-    <a href="{{url_for('delete')}}">Press here to delete account</a>
-    <h2>Hi, {{ current_user.username }}!</h2> 
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.post.label }}<br>
-            {{ form.post(cols=32, rows=4) }}<br>
-            {% for error in form.post.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    <div>
-        <h3>Recent Posts</h3>  
-        {% for post in posts %}
-            {% include "user_post.html" %}
-        {% endfor %}
-    </div>
-</body>
-
-
-
-</html>
-=======
     <title>{{ _('Home') }}</title>
 {% endblock %}
 {% block list %}
@@ -85,4 +53,3 @@
         {% include "user_post.html" %}
     {% endfor %}
 {% endblock %}
->>>>>>> 99e062b783504f932acaad8708329281f25d3843

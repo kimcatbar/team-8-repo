@@ -1,40 +1,3 @@
-<<<<<<< HEAD
-
-<table>
-    <tr valign="top">
-        <td>
-            <div class="text-muted pt-3 border-bottom">
-                <p class="pb-3 mb-0 small lh-sm"></p>
-                <p>
-                <strong class="d-block text-gray-dark">{{ current_user.username }}</strong>
-                    says:<br>{{post.body}}<br>{{post.timestamp}}
-                </p>
-                <br/>
-                <div class="" id="comments-{{post.id}}">
-                   <div class="card">
-                        <div class="card-body" id="comments-expanded-{{post.id}}">
-                            {% for comment in post.comments %}
-                            <div class="d-flex justify-content-between align-items-center"
-                             >
-                                <div>
-                                    <a href="/user/{{comment.user.username}}">{{comment.user.username}}</a>:{{comment.body}}  
-                                </div>
-                                
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                
-                <form class = "input-group mb-3" method = "POST" action ="/create-comment/{{post.id}}">
-                    <input type = "txt" id="text" name="text" class ="form-control" placeholder="Comment here!"/>
-                     <button type="submit" class="btn-btn primary"> Comment</button>
-                </form>
-            </div>
-        </td>
-    </tr>
-</table>
-=======
 <table>
     <tr valign="top">
         <td>
@@ -46,7 +9,27 @@
             {% if post.image %}
             <img src="{{ url_for('static', filename='images/' + post.image) }}" width="100" height="100">
             {% endif %}
+            <div class="" id="comments-{{post.id}}">
+                <div class="card">
+                     <div class="card-body" id="comments-expanded-{{post.id}}">
+                         {% for comment in post.comments %}
+                         <div class="d-flex justify-content-between align-items-center"
+                          >
+                             <div>
+                                 <a href="/user/{{comment.user.username}}">{{comment.user.username}}</a>:{{comment.body}}
+                             </div>
+
+                         </div>
+                         {% endfor %}
+                     </div>
+                 </div>
+             </div>
+
+             <form class = "input-group mb-3" method = "POST" action ="/create-comment/{{post.id}}">
+                 <input type = "txt" id="text" name="text" class ="form-control" placeholder="Comment here!"/>
+                  <button type="submit" class="btn-btn primary"> Comment</button>
+             </form>
+         </div>
         </td>
     </tr>
 </table>
->>>>>>> 99e062b783504f932acaad8708329281f25d3843

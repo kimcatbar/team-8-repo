@@ -66,6 +66,7 @@ class Post(db.Model):                                                           
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)     # post timestamp
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))                   # user ID that submitted the post
     image = db.Column(db.String(20), nullable=True)                             # image file name
+    comments = db.relationship('Comment', backref='post', passive_deletes=True)
 
     def __repr__(self):
         return "<Post {}>".format(self.body)

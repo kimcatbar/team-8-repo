@@ -1,8 +1,8 @@
 from app import myapp_obj, db
 from flask_babel import _
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from app.forms import LoginForm, RegistrationForm, PostForm
-from app.models import User, Post
+from app.models import User, Post, Comment
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 from flask_login import login_required
@@ -32,7 +32,8 @@ def login():
 @myapp_obj.route('/dashboard', methods=['GET', 'POST'])                                 # user home page
 @login_required
 def dashboard():
-    form = PostForm()                                                                   # form for making a post
+    form = PostForm()  
+    picture_name=None                                                                 # form for making a post
     if form.validate_on_submit():                                                       # check if form is submitted
         if form.image.data:                                                             # if there is an image submitted
             picture = form.image.data
@@ -44,12 +45,7 @@ def dashboard():
         db.session.commit()                                                             # commit changes to database
         flash("Your post is live!")
         return redirect(url_for('dashboard'))                                           # redirect back to user home page
-    posts = [
-        {
-            'author': {"username": 'antony'},
-            "body": "Beautiful day ain't it!"
-        }   
-    ]
+    posts = current_user.my_posts().all()
     return render_template('dashboard.html',form=form,posts=posts)                      # return to user home page
 
 @myapp_obj.route('/logout', methods=['GET', 'POST'])                 # logout
@@ -104,3 +100,17 @@ def user(username):
     if username == current_user.username:                                              # if the selected user profile is the current logged in user, redirect to own profile
         return redirect('/profile')
     return render_template('profile.html', user=user,posts=posts)
+
+@myapp_obj.route("/create-comment/<post_id>", methods = ['POST'])
+@login_required
+def create_comment(post_id):
+    text = request.form.get('text')
+    if not text:
+        flash('Comment cannot be empty', category = 'error')
+    else:
+       post = Post.query.filter_by(id=post_id)
+       if post:
+            comment = Comment(body=text, user_id=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+    return redirect(request.referrer)
