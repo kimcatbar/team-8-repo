@@ -1,14 +1,8 @@
 from app import myapp_obj, db
-<<<<<<< HEAD
-from flask import render_template, redirect, url_for, flash, request
-from app.forms import LoginForm, RegistrationForm, PostForm
-from app.models import User, Post, Comment
-=======
 from flask_babel import _
 from flask import render_template, redirect, url_for, flash
 from app.forms import LoginForm, RegistrationForm, PostForm
 from app.models import User, Post
->>>>>>> 99e062b783504f932acaad8708329281f25d3843
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user
 from flask_login import login_required
@@ -35,22 +29,6 @@ def login():
                 return redirect(url_for('dashboard'))                                   # redirect to user home page
     return render_template('login.html', form=form)                                     # otherwise, return back to log in page if it failed
 
-
-<<<<<<< HEAD
-@myapp_obj.route('/dashboard', methods=['GET', 'POST'])#display text box and posts in dashboard           
-@login_required
-def dashboard():
-    form = PostForm()#uses form format from models 
-    if form.validate_on_submit():#if all requriements for post are met
-        print("forms" + form.post.data)
-        post = Post(body=form.post.data,user_id=current_user.id)#text post is created
-        db.session.add(post)#post staged
-        db.session.commit()#post is added to databse 
-        flash('Your post in live!')
-        return redirect(url_for('dashboard'))#redirected and displayed to dashboard 
-    posts = current_user.my_posts().all()#display user's posts
-    return render_template('dashboard.html', title="Home Page",form=form,posts=posts)
-=======
 @myapp_obj.route('/dashboard', methods=['GET', 'POST'])                                 # user home page
 @login_required
 def dashboard():
@@ -73,8 +51,6 @@ def dashboard():
         }   
     ]
     return render_template('dashboard.html',form=form,posts=posts)                      # return to user home page
->>>>>>> 99e062b783504f932acaad8708329281f25d3843
-
 
 @myapp_obj.route('/logout', methods=['GET', 'POST'])                 # logout
 @login_required
@@ -98,43 +74,6 @@ def register():
 @myapp_obj.route('/delete', methods=['GET', 'POST'])                                    # route to delete account
 @login_required
 def delete():
-<<<<<<< HEAD
-    current_user.remove()
-    db.session.commit()
-    flash("Account has been deleted.")
-    return redirect('/home')
-
-@myapp_obj.route('/user/<username>', methods=['GET','POST'])#user profile page
-@login_required
-def profile(username):
-    form = PostForm()#form used to user can sumbit a post
-    if form.validate_on_submit():
-        print("forms" + form.post.data)
-        post = Post(body=form.post.data,user_id=current_user.id)
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post in live!')
-        return redirect(url_for('profile',username=username))#post and redirect to user profile
-    posts = current_user.my_posts().all()#display all user posts in profile
-    return render_template('user_profile.html', form = form, posts=posts)
-  
-@myapp_obj.route("/create-comment/<post_id>", methods = ['POST'])
-@login_required
-def create_comment(post_id):
-    text = request.form.get('text')
-    if not text:
-        flash('Comment cannot be empty', category = 'error')
-    else:
-       post = Post.query.filter_by(id=post_id)
-       if post:
-            comment = Comment(body=text, user_id=current_user.id, post_id=post_id)
-            db.session.add(comment)
-            db.session.commit()  
-    return redirect(url_for("dashboard"))
-
-
-
-=======
     current_user.remove()                                                               # remove the current user
     db.session.commit()                                                                 # commit the changes
     flash(_("Account has been deleted."))                                               
@@ -165,5 +104,3 @@ def user(username):
     if username == current_user.username:                                              # if the selected user profile is the current logged in user, redirect to own profile
         return redirect('/profile')
     return render_template('profile.html', user=user,posts=posts)
->>>>>>> 99e062b783504f932acaad8708329281f25d3843
-

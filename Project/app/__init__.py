@@ -29,12 +29,6 @@ login.login_view = 'login'
 
 from app import routes, models
 
-<<<<<<< HEAD
-
-with myapp_obj.app_context():
-    db.create_all()
-=======
 with myapp_obj.app_context():       # creates database
     db.create_all()
     db.session.commit()
->>>>>>> 99e062b783504f932acaad8708329281f25d3843

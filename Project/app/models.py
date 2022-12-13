@@ -1,11 +1,6 @@
 from app import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-<<<<<<< HEAD
-from sqlalchemy.sql import func
-=======
-from datetime import datetime
->>>>>>> 99e062b783504f932acaad8708329281f25d3843
 from app import login
 from flask_login import UserMixin
 #to create the followers table based on the follower's ID and user's ID
@@ -19,19 +14,9 @@ class User(db.Model, UserMixin):                                                
     username = db.Column(db.String, unique=True)                                # Username
     password = db.Column(db.String(200))                                        # password         
     posts = db.relationship('Post', backref='author', lazy='dynamic')           # establishing relationship between user and their posts
-
-<<<<<<< HEAD
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String, unique=True)
-    password = db.Column(db.String(200))
-    email = db.Column(db.String(32), unique=True)
-    posts = db.relationship('Post', backref='user', passive_deletes=True)
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
-=======
-    def set_password(self, password):                                           # set password function
->>>>>>> 99e062b783504f932acaad8708329281f25d3843
 
+    def set_password(self, password):                                           # set password function
         self.password = generate_password_hash(password)
 
     def check_password(self, password):                                         # check password function
@@ -42,7 +27,6 @@ class User(db.Model, UserMixin):
     
     def remove(self):                                                           # remove/delete account function
         db.session.delete(self)
-<<<<<<< HEAD
         
     def my_posts(self):
         own = Post.query.filter_by(user_id=self.id)
@@ -50,31 +34,7 @@ class User(db.Model, UserMixin):
     
     def blog_posts(self):
         return Post.query.order_by(Post.timestamp.desc())
-
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
-
-class Post(db.Model):#class Post creates a user text post 
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
-    comments = db.relationship('Comment', backref='post', passive_deletes=True)
-
-    def get_comments(self):
-        return Comment.query.filter_by(post_id=self.id).order_by(Comment.timestamp.desc())
-
-    def __repr__(self):
-        return "<Post {}>".format(self.body)
-
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
-=======
+    
     #this function is to let user can follow another user
     def follow(self, user):
         if not self.is_following(user): 
@@ -109,4 +69,10 @@ class Post(db.Model):                                                           
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
->>>>>>> 99e062b783504f932acaad8708329281f25d3843
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
