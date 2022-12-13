@@ -85,7 +85,7 @@
         
         <main class="d-flex">
         
-          <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+          <div class="sidebar d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
             <a href="/dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#chevron-right"/></svg>
               <span class="fs-4">Twitter</span>
@@ -102,14 +102,14 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                 <li><a class="dropdown-item" href="/settings">{{ _('Settings') }}</a></li>
-                <li><a class="dropdown-item" href="/profile">{{ _('Profile') }}</a></li>
+                <li><a class="dropdown-item" href="{{url_for('userProfile', username=current_user.username)}}">{{ _('Profile') }}</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{url_for('logout')}}">{{ _('Sign out') }}</a></li>
               </ul>
             </div>
           </div>
           <div class="b-example-vr"></div>
-          <div class = "flex-column">
+          <div class = "flex-column center">
           {% block content%}{% endblock %}
         </div>
         </main>
