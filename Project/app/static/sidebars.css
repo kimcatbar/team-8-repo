@@ -13,7 +13,7 @@ main {
   height: -webkit-fill-available;
   max-height: 100vh;
   overflow-x: auto;
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 
 .dropdown-toggle { outline: 0; }
@@ -57,4 +57,15 @@ main {
 
 .scrollarea {
   overflow-y: auto;
+}
+
+.sidebar {
+  position: fixed;
+  height: 100vh;
+  height: -webkit-fill-available;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
 }
