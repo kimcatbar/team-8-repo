@@ -6,6 +6,7 @@ from wtforms.validators import DataRequired,InputRequired,Length,ValidationError
 from flask_babel import lazy_gettext
 
 class LoginForm(FlaskForm):                                                 # log in form with username, password, remember me, and submit fields
+
     username = StringField(validators=[
                            InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": lazy_gettext("Username") })
 
