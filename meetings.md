@@ -1,4 +1,12 @@
 ## Meetings
+### 2022-12-12 at 14:00
+Attendees: Ngoc, Antony, and Kim
+
+Meeting Purpose: Finish last requirements and clean up code for the application to submit.
+
+Updates: Chinese (simplified) added, follower system finished, Bootstrap integration added. Website should be fully functional now.
+
+Summarize: This was the final meeting before project submission. Individual pull requests were done and everyone's branches were merged. Final edits were done and the finishing touches like bootstrap visuals and flash messages were integrated. With this, the project is completed.
 
 ### 2022-12-7 at 17:00
 Attendees: Ngoc, Antony, and Kim
