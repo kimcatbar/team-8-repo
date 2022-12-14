@@ -92,3 +92,4 @@ https://getbootstrap.com/
 
 https://www.youtube.com/@TechWithTim
   
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
