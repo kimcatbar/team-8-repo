@@ -21,11 +21,13 @@ def home():
 @myapp_obj.route('/login', methods=['GET', 'POST'])           # when a user logs in it checks with the database if the user exists
 def login():
     form = LoginForm()                                                                  # log in form
+    if current_user.is_authenticated:                                                   # if user is logged in, return to user home page/dashboard
+        return redirect(url_for('dashboard'))
     if form.validate_on_submit():                                                       # check if form is submitted
-        current_user = User.query.filter_by(username=form.username.data).first()        # match username with the one entered in the form
-        if current_user:
-            if check_password_hash(current_user.password, form.password.data):          # check if the password matches
-                login_user(current_user, remember=form.remember_me.data)                # log in if it does, keeping in mind if the user login wants to be remembered
+        user = User.query.filter_by(username=form.username.data).first()        # match username with the one entered in the form
+        if user:
+            if check_password_hash(user.password, form.password.data):          # check if the password matches
+                login_user(user, remember=form.remember_me.data)                # log in if it does, keeping in mind if the user login wants to be remembered
                 return redirect(url_for('dashboard'))                                   # redirect to user home page
     return render_template('login.html', form=form)                                     # otherwise, return back to log in page if it failed
 
@@ -59,6 +61,8 @@ def logout():
 
 @myapp_obj.route('/register', methods=['GET', 'POST'])                                  # register page
 def register():
+    if current_user.is_authenticated:                                                   # if user is logged in, return to user home page/dashboard
+        return redirect(url_for('dashboard'))
     form = RegistrationForm()                                                           # registration form
     if form.validate_on_submit():                                                       # validate form submission
         hashed_password = generate_password_hash(form.password.data)                    # generate pw hash to submitted pw
